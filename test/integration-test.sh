@@ -2,9 +2,9 @@
 
 cd ../auth-service
 docker build -t auth-service .
-docker run -d -p 8001:8001 auth-service
+CONTAINER="$(docker run -d -p 8001:8001 auth-service)"
 
 cd ../entry-service
 go test -tags integration
 
-# TODO: Somehow delete running container.
+docker kill ${CONTAINER}

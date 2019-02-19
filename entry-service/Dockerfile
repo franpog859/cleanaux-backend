@@ -1,5 +1,4 @@
 FROM golang:1.10-alpine as builder
-EXPOSE 8000
 
 RUN  mkdir -p /go/src \
   && mkdir -p /go/bin \
@@ -17,3 +16,5 @@ RUN go test -c ./...
 FROM alpine:3.8
 COPY --from=builder /go/src/app .
 ENTRYPOINT ./app
+
+EXPOSE 8000
