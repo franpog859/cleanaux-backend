@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: entry-service
+spec:
+  type: LoadBalancer
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8000
+    protocol: TCP
+  selector:
+    app: entry-service

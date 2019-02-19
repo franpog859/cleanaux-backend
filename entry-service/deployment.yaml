@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: entry-service
+spec:
+  replicas: 2
+  template: 
+    metadata:
+      labels: 
+        app: entry-service
+    spec:
+      containers:
+      - name: entry-service
+        image: entry-service # TODO: Somehow fix it.
+        ports:
+        - containerPort: 8000
