@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: auth-service
+spec:
+  replicas: 2
+  template: 
+    metadata:
+      labels: 
+        app: auth-service
+    spec:
+      containers:
+      - name: auth-service
+        image: franpog859/auth-service:0.1
+        ports:
+        - containerPort: 8001
