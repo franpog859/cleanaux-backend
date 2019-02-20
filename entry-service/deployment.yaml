@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: entry-service
-        image: entry-service # TODO: Somehow fix it.
+        image: franpog859/entry-service:0.1
         ports:
         - containerPort: 8000

@@ -1,12 +1,12 @@
-kind: Service
 apiVersion: v1
+kind: Service
 metadata:
   name: entry-service
 spec:
-  type: LoadBalancer
+  type: ClusterIP
   ports:
   - name: http
-    port: 8080
+    port: 8000
     targetPort: 8000
     protocol: TCP
   selector:
