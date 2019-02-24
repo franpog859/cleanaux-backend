@@ -16,3 +16,9 @@ To get URL to the service run:
 ```sh
 minikube service entry-service --url
 ```
+
+```sh
+minikube addons list
+minikube addons enable ingress
+minikube addons disable addon-manager
+```
