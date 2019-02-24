@@ -17,8 +17,11 @@ To get URL to the service run:
 minikube service entry-service --url
 ```
 
+Apply Ingress
 ```sh
 minikube addons list
 minikube addons enable ingress
 minikube addons disable addon-manager
+kubectl apply -f ingress.yaml # wait a while
+kubectl get ingress # add {ADDRESS} {HOSTS} to the /etc/hosts file
 ```
