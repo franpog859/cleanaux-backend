@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: entry-service
 spec:
-  replicas: 2
+  replicas: 1
   template: 
     metadata:
       labels: 
@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: entry-service
-        image: franpog859/entry-service:0.1
+        image: franpog859/entry-service:v0.2
         ports:
         - containerPort: 8000
