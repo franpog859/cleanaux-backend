@@ -10,7 +10,7 @@ import (
 )
 
 func TestAuthService(t *testing.T) {
-	auth := authService{Base: "http://localhost:8001"}
+	auth := authService{Base: "http://localhost:8000"}
 	// TODO: Add user1:pass1 to the base
 
 	t.Run("should not be able to login with wrong username/password", func(t *testing.T) {

@@ -8,7 +8,7 @@ import (
 
 const (
 	port            = ":8000"
-	authServiceBase = "http://auth-service"
+	authServiceBase = "http://auth-service:80"
 )
 
 func main() {

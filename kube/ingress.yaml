@@ -11,4 +11,4 @@ spec:
       paths:
       - backend:
           serviceName: entry-service
-          servicePort: 8000
+          servicePort: 80

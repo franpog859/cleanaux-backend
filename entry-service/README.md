@@ -13,11 +13,13 @@ kubectl apply -f service.yaml
 ```
 
 To get URL to the service run:
+
 ```sh
 minikube service entry-service --url
 ```
 
 Apply Ingress
+
 ```sh
 minikube addons list
 minikube addons enable ingress

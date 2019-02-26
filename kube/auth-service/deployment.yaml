@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: auth-service
-        image: franpog859/auth-service:0.1
+        image: franpog859/auth-service:v0.2
         ports:
-        - containerPort: 8001
+        - containerPort: 8000
