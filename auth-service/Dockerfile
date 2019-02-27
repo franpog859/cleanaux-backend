@@ -14,7 +14,7 @@ RUN go build -o app
 RUN go test -c ./...
 
 FROM alpine:3.8
-COPY --from=builder /go/src/app .
+COPY --from=builder /go/src/app/app .
 ENTRYPOINT ./app
 
-EXPOSE 8001
+EXPOSE 8000
