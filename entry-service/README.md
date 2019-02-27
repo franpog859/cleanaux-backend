@@ -1,29 +1,16 @@
 # Entry Service
 
+To build and push the docker image run:
+
 ```sh
 docker build -t entry-service .
 docker tag {IMAGE_ID} franpog859/entry-service:{TAG}
-docker push franpog859/entry-service
+docker push franpog859/entry-service:{TAG}
 ```
 
-```sh
-minikube start
-kubectl apply -f deployment.yaml
-kubectl apply -f service.yaml
-```
-
-To get URL to the service run:
+To build and expose Entry Service with Docker run:
 
 ```sh
-minikube service entry-service --url
-```
-
-Apply Ingress
-
-```sh
-minikube addons list
-minikube addons enable ingress
-minikube addons disable addon-manager
-kubectl apply -f ingress.yaml # wait a while
-kubectl get ingress # add {ADDRESS} {HOSTS} to the /etc/hosts file
+docker build -t entry-service .
+docker run -p 8000:8000 entry-service
 ```

@@ -16,7 +16,7 @@ type user struct {
 
 var users = make(map[string]string)
 
-var seedUsers = []user{
+var seedUsers = []user{ // TODO: Implement some auth here. It is currently NOAuth.
 	user{
 		Username: "user1",
 		Password: "pass1",
