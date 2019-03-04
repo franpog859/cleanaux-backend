@@ -8,13 +8,13 @@ ENV PATH=$GOPATH/bin:$PATH
 
 RUN mkdir -p $GOPATH/src/app 
 ADD . $GOPATH/src/app
-WORKDIR $GOPATH/src/app 
+WORKDIR $GOPATH/src/app/cmd
 
 RUN go build -o app
 RUN go test -c ./...
 
 FROM alpine:3.8
-COPY --from=builder /go/src/app/app .
+COPY --from=builder /go/src/app/cmd/app .
 ENTRYPOINT ./app
 
 EXPOSE 8000
