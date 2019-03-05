@@ -1,9 +1,15 @@
 package main
 
-type item struct {
-	id            int
-	name          string
-	lastUserID    int
-	lastUsageDate string
-	intervalDays  int
+type Item struct {
+	ID            int
+	Name          string
+	LastUserID    int
+	LastUsageDate string
+	IntervalDays  int
+}
+
+type Content struct {
+	ID     int
+	Name   string
+	Status int
 }
