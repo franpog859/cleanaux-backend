@@ -16,7 +16,7 @@ const (
 
 // DatabaseService interface.
 type DatabaseService interface {
-	GetAllItems() ([]Item, error)
+	GetAllItems() ([]item, error)
 }
 
 type databaseService struct {
@@ -36,21 +36,21 @@ func NewDatabaseService() DatabaseService {
 	}
 }
 
-func (database *databaseService) GetAllItems() ([]Item, error) {
+func (database *databaseService) GetAllItems() ([]item, error) {
 	db, err := sql.Open("mysql", database.source())
 	if err != nil {
-		return []Item{}, err
+		return []item{}, err
 	}
 	defer db.Close()
 
 	selectDB, err := db.Query("SELECT * FROM items")
 	if err != nil {
-		return []Item{}, err
+		return []item{}, err
 	}
 
 	items, err := getItemsFromQuery(selectDB)
 	if err != nil {
-		return []Item{}, err
+		return []item{}, err
 	}
 
 	return items, nil
@@ -66,18 +66,18 @@ func (database *databaseService) source() string {
 	)
 }
 
-func getItemsFromQuery(query *sql.Rows) ([]Item, error) {
-	items := []Item{}
+func getItemsFromQuery(query *sql.Rows) ([]item, error) {
+	items := []item{}
 	var id, intervalDays, lastUserID int
 	var name, lastUsageDate string
 
 	for query.Next() {
 		err := query.Scan(&id, &name, &lastUserID, &lastUsageDate, &intervalDays)
 		if err != nil {
-			return []Item{}, err
+			return []item{}, err
 		}
 
-		itemInstance := Item{
+		itemInstance := item{
 			id,
 			name,
 			lastUserID,

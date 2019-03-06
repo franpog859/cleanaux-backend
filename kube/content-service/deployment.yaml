@@ -1,32 +1,16 @@
-apiVersion: apps/v1 
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mysql
+  name: content-service
 spec:
-  selector:
-    matchLabels:
-      app: mysql
-  strategy:
-    type: Recreate
+  replicas: 1
   template:
     metadata:
       labels:
-        app: mysql
+        app: content-service
     spec:
       containers:
-      - image: mysql:5.6
-        name: mysql
-        env:
-          # Use secret in real usage
-        - name: MYSQL_ROOT_PASSWORD
-          value: password
+      - name: auth-service
+        image: franpog859/content-service:v0.2
         ports:
-        - containerPort: 3306
-          name: mysql
-        volumeMounts:
-        - name: mysql-persistent-storage
-          mountPath: /var/lib/mysql
-      volumes:
-      - name: mysql-persistent-storage
-        persistentVolumeClaim:
-          claimName: mysql-pv-claim
+        - containerPort: 8000

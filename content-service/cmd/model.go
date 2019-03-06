@@ -1,6 +1,6 @@
 package main
 
-type Item struct {
+type item struct {
 	ID            int
 	Name          string
 	LastUserID    int
@@ -8,8 +8,8 @@ type Item struct {
 	IntervalDays  int
 }
 
-type Content struct {
-	ID     int
-	Name   string
-	Status int
+type userContentResponse struct {
+	ID     int    `json:"id"`
+	Name   string `json:"name"`
+	Status int    `json:"status"`
 }

@@ -15,13 +15,12 @@ DROP TABLE IF EXISTS items;
 CREATE TABLE items (
   id INTEGER UNSIGNED NOT NULL AUTO_INCREMENT,
   name VARCHAR(30) NOT NULL,
-  lastUserId INTEGER UNSIGNED,
-  lastUsageDate DATE,
+  lastUserId INTEGER UNSIGNED NOT NULL,
+  lastUsageDate DATE NOT NULL,
   intervalDays INTEGER UNSIGNED NOT NULL,
   FOREIGN KEY (lastUserId) REFERENCES users(id),
   PRIMARY KEY (id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=latin1;
 
-INSERT INTO items(name, intervalDays) VALUES
-("kitchen", 7),
-("bathroom", 7);
+INSERT INTO users(name, points, lastUsageDate) VALUES
+("init-user", 0, "2019-03-06");

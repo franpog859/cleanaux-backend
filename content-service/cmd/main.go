@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"net/http"
 
@@ -34,8 +33,9 @@ func userGetContent(context *gin.Context) {
 		context.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	response, err := json.Marshal(items) // TODO: Modify the data for client. I mean intervalDays to status for example.
-	context.JSON(http.StatusOK, gin.H{"data": string(response)})
+	content := GetContentFromItems(items)
+
+	context.JSON(http.StatusOK, content)
 }
 
 // TODO: Actually everything.
