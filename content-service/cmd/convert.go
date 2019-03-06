@@ -63,7 +63,7 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	} else {
 		border = 2
 	}
-	if border >= intervalDays - pastDays {
+	if border >= intervalDays-pastDays {
 		return 3, nil
 	}
 
@@ -72,7 +72,7 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	} else {
 		border = 5
 	}
-	if border >= intervalDays - pastDays {
+	if border >= intervalDays-pastDays {
 		return 2, nil
 	}
 
@@ -81,7 +81,7 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	} else {
 		border = 10
 	}
-	if border >= intervalDays - pastDays {
+	if border >= intervalDays-pastDays {
 		return 1, nil
 	}
 
