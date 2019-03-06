@@ -33,7 +33,11 @@ func userGetContent(context *gin.Context) {
 		context.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	content := GetContentFromItems(items)
+	content, err := GetContentFromItems(items)
+	if err != nil {
+		fmt.Println(err)
+		context.AbortWithStatus(http.StatusInternalServerError)
+	}
 
 	context.JSON(http.StatusOK, content)
 }
