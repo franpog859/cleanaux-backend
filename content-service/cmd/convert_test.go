@@ -7,10 +7,9 @@ import (
 	"time"
 )
 
-func TestConvert_GetContentFromItems(t *testing.T) {
+func TestConvert_CreateContentFromItems(t *testing.T) {
 
 	now := time.Now()
-	layout := "2006-01-02"
 
 	t.Run("should return correct content from items", func(t *testing.T) {
 		// given
@@ -19,119 +18,119 @@ func TestConvert_GetContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, -9).Format(layout),
+				now.AddDate(0, 0, -9).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				2,
 				"name",
 				1,
-				now.AddDate(0, 0, -10).Format(layout),
+				now.AddDate(0, 0, -10).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				3,
 				"name",
 				1,
-				now.AddDate(0, 0, -14).Format(layout),
+				now.AddDate(0, 0, -14).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				4,
 				"name",
 				1,
-				now.AddDate(0, 0, -15).Format(layout),
+				now.AddDate(0, 0, -15).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				5,
 				"name",
 				1,
-				now.AddDate(0, 0, -18).Format(layout),
+				now.AddDate(0, 0, -18).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				6,
 				"name",
 				1,
-				now.AddDate(0, 0, -19).Format(layout),
+				now.AddDate(0, 0, -19).Format(DATE_LAYOUT),
 				20,
 			},
 			{
 				7,
 				"name",
 				1,
-				now.AddDate(0, 0, -3).Format(layout),
+				now.AddDate(0, 0, -3).Format(DATE_LAYOUT),
 				7,
 			},
 			{
 				8,
 				"name",
 				1,
-				now.AddDate(0, 0, -4).Format(layout),
+				now.AddDate(0, 0, -4).Format(DATE_LAYOUT),
 				7,
 			},
 			{
 				9,
 				"name",
 				1,
-				now.AddDate(0, 0, -5).Format(layout),
+				now.AddDate(0, 0, -5).Format(DATE_LAYOUT),
 				7,
 			},
 			{
 				10,
 				"name",
 				1,
-				now.AddDate(0, 0, -6).Format(layout),
+				now.AddDate(0, 0, -6).Format(DATE_LAYOUT),
 				7,
 			},
 			{
 				11,
 				"name",
 				1,
-				now.AddDate(0, 0, -7).Format(layout),
+				now.AddDate(0, 0, -7).Format(DATE_LAYOUT),
 				7,
 			},
 			{
 				12,
 				"name",
 				1,
-				now.AddDate(0, 0, 0).Format(layout),
+				now.AddDate(0, 0, 0).Format(DATE_LAYOUT),
 				3,
 			},
 			{
 				13,
 				"name",
 				1,
-				now.AddDate(0, 0, -1).Format(layout),
+				now.AddDate(0, 0, -1).Format(DATE_LAYOUT),
 				3,
 			},
 			{
 				14,
 				"name",
 				1,
-				now.AddDate(0, 0, -2).Format(layout),
+				now.AddDate(0, 0, -2).Format(DATE_LAYOUT),
 				3,
 			},
 			{
 				15,
 				"name",
 				1,
-				now.AddDate(0, 0, -3).Format(layout),
+				now.AddDate(0, 0, -3).Format(DATE_LAYOUT),
 				3,
 			},
 			{
 				16,
 				"name",
 				1,
-				now.AddDate(0, 0, 0).Format(layout),
+				now.AddDate(0, 0, 0).Format(DATE_LAYOUT),
 				1,
 			},
 			{
 				17,
 				"name",
 				1,
-				now.AddDate(0, 0, -1).Format(layout),
+				now.AddDate(0, 0, -1).Format(DATE_LAYOUT),
 				1,
 			},
 		}
@@ -156,7 +155,7 @@ func TestConvert_GetContentFromItems(t *testing.T) {
 		}
 
 		// when
-		content, err := GetContentFromItems(items)
+		content, err := CreateContentFromItems(items)
 		require.NoError(t, err)
 
 		// then
@@ -170,16 +169,16 @@ func TestConvert_GetContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, -9).Format(layout),
+				now.AddDate(0, 0, -9).Format(DATE_LAYOUT),
 				0,
 			},
 		}
 
 		// when
-		_, err := GetContentFromItems(items)
+		_, err := CreateContentFromItems(items)
 
 		// then
-		require.Error(t, err)
+		assert.Error(t, err)
 	})
 
 	t.Run("should return error if time is incorrectly read", func(t *testing.T) {
@@ -189,15 +188,37 @@ func TestConvert_GetContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, 20).Format(layout),
+				now.AddDate(0, 0, 20).Format(DATE_LAYOUT),
 				20,
 			},
 		}
 
 		// when
-		_, err := GetContentFromItems(items)
+		_, err := CreateContentFromItems(items)
 
 		// then
-		require.Error(t, err)
+		assert.Error(t, err)
+	})
+}
+
+func TestConvert_CreateUpdateItemInput(t *testing.T) {
+
+	now := time.Now()
+
+	t.Run("should return correct update item", func(t *testing.T) {
+		// given
+		userRequestBody := userContentRequest{
+			ID: 1,
+		}
+		expectedUpdateItem := updateItem{
+			ID:            1,
+			LastUsageDate: now.Format(DATE_LAYOUT),
+		}
+
+		// when
+		updateItem := CreateUpdateItemInput(userRequestBody)
+
+		// then
+		assert.Equal(t, expectedUpdateItem, updateItem)
 	})
 }

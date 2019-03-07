@@ -18,7 +18,7 @@ func main() {
 	userRouter := router.Group("/user")
 	{
 		userRouter.GET("/content", userGetContent)
-		//userRouter.PUT("/content", userPutContent)
+		userRouter.PUT("/content", userPutContent)
 	}
 
 	router.Run(port)
@@ -31,15 +31,38 @@ func userGetContent(context *gin.Context) {
 	if err != nil {
 		fmt.Println(err)
 		context.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
-	content, err := GetContentFromItems(items)
+	content, err := CreateContentFromItems(items)
 	if err != nil {
 		fmt.Println(err)
 		context.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	context.JSON(http.StatusOK, content)
 }
 
-// TODO: Actually everything.
+func userPutContent(context *gin.Context) {
+	var userRequestBody userContentRequest
+	err := context.ShouldBindJSON(&userRequestBody)
+	if err != nil {
+		fmt.Println(err)
+		context.AbortWithStatus(http.StatusBadRequest)
+		return
+	}
+
+	updateItemInput := CreateUpdateItemInput(userRequestBody)
+
+	database := NewDatabaseService()
+
+	err = database.UpdateItem(updateItemInput)
+	if err != nil {
+		fmt.Println(err)
+		context.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	context.Status(http.StatusOK)
+}

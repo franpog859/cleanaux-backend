@@ -17,6 +17,7 @@ const (
 // DatabaseService interface.
 type DatabaseService interface {
 	GetAllItems() ([]item, error)
+	UpdateItem(updateItem updateItem) error
 }
 
 type databaseService struct {
@@ -88,4 +89,24 @@ func getItemsFromQuery(query *sql.Rows) ([]item, error) {
 	}
 
 	return items, nil
+}
+
+func (database *databaseService) UpdateItem(updateItem updateItem) error {
+	db, err := sql.Open("mysql", database.source())
+	if err != nil {
+		return err
+	}
+	defer db.Close()
+
+	updateDB, err := db.Prepare("UPDATE items SET lastUsageDate=? WHERE id=?")
+	if err != nil {
+		return err
+	}
+
+	_, err = updateDB.Exec(updateItem.LastUsageDate, updateItem.ID)
+	if err != nil {
+		return err
+	}
+
+	return nil
 }

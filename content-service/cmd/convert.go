@@ -1,12 +1,12 @@
 package main
 
 import (
+	"errors"
 	"fmt"
-	"github.com/pkg/errors"
 	"time"
 )
 
-func GetContentFromItems(items []item) ([]userContentResponse, error) {
+func CreateContentFromItems(items []item) ([]userContentResponse, error) {
 	content := []userContentResponse{}
 	for _, item := range items {
 		status, err := getStatus(item)
@@ -40,8 +40,7 @@ func getStatus(item item) (int, error) {
 }
 
 func countDays(lastUsageDate string) (int, error) {
-	layout := "2006-01-02"
-	lastUsage, err := time.Parse(layout, lastUsageDate)
+	lastUsage, err := time.Parse(DATE_LAYOUT, lastUsageDate)
 	if err != nil {
 		return 0, err
 	}
@@ -49,6 +48,7 @@ func countDays(lastUsageDate string) (int, error) {
 	pastDays := int(time.Now().Sub(lastUsage).Hours() / 24)
 	return pastDays, nil
 }
+
 func calculateStatus(intervalDays, pastDays int) (int, error) {
 	if intervalDays < 1 || pastDays < 0 {
 		return 0, errors.New(fmt.Sprintf(
@@ -86,4 +86,13 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	}
 
 	return 0, nil
+}
+
+func CreateUpdateItemInput(userContentRequestBody userContentRequest) updateItem {
+	lastUsageDate := time.Now().Format(DATE_LAYOUT)
+
+	return updateItem{
+		ID:            userContentRequestBody.ID,
+		LastUsageDate: lastUsageDate,
+	}
 }
