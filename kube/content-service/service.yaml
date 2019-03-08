@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: content-service
+  name: content-service-svc-external
 spec:
-  type: ClusterIP
+  type: NodePort
   ports:
   - name: http
     port: 80

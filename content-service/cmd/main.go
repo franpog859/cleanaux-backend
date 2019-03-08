@@ -1,14 +1,14 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
 )
 
 const (
-	port = ":8000"
+	externalPort = ":8000"
 )
 
 func main() {
@@ -21,7 +21,7 @@ func main() {
 		userRouter.PUT("/content", userPutContent)
 	}
 
-	router.Run(port)
+	router.Run(externalPort)
 }
 
 func userGetContent(context *gin.Context) {
@@ -29,14 +29,14 @@ func userGetContent(context *gin.Context) {
 
 	items, err := database.GetAllItems()
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
 	content, err := CreateContentFromItems(items)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -48,7 +48,7 @@ func userPutContent(context *gin.Context) {
 	var userRequestBody userContentRequest
 	err := context.ShouldBindJSON(&userRequestBody)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		context.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -59,7 +59,7 @@ func userPutContent(context *gin.Context) {
 
 	err = database.UpdateItem(updateItemInput)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
