@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: content-service-svc-external
+  name: content-service-external
 spec:
   type: NodePort
   ports:
