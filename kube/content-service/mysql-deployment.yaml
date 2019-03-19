@@ -40,8 +40,8 @@ spec:
           mountPath: /docker-entrypoint-initdb.d
       volumes:
       - name: init-script
-          persistentVolumeClaim:
-            claimName: init-script
+        persistentVolumeClaim:
+          claimName: init-script
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim
