@@ -7,6 +7,7 @@ echo "Applying resources..."
 kubectl apply -f ${KUBERNETES_DIR}/entry-service/
 kubectl apply -f ${KUBERNETES_DIR}/auth-service/
 kubectl apply -f ${KUBERNETES_DIR}/content-service/
+kubectl apply -f ${KUBERNETES_DIR}/mysql-database/
 
 echo "Setting up ingress..."
 kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)

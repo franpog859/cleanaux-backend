@@ -54,6 +54,7 @@ To apply deployments and services run:
 kubectl apply -f entry-service/
 kubectl apply -f auth-service/
 kubectl apply -f content-service/
+kubectl apply -f mysql-database/
 ```
 
 To open MySQL client for content-service run:

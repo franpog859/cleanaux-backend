@@ -16,7 +16,7 @@ curl -d "username=user1&password=pass1" -X POST {URL}/login # should return toke
 
 To test Content Service manually:
 
-- create `mysql` resource 
+- create `mysql` resource
 - run mysql client and apply test `*.sql` files
 - expose loadbalancer for `mysql-service`
 - get url from the loadbalancer via `minikube service {LOADBALANCER} --url`

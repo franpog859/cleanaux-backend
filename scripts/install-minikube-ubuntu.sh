@@ -10,6 +10,7 @@ echo "Applying resources..."
 kubectl apply -f ${KUBERNETES_DIR}/entry-service/
 kubectl apply -f ${KUBERNETES_DIR}/auth-service/
 kubectl apply -f ${KUBERNETES_DIR}/content-service/
+kubectl apply -f ${KUBERNETES_DIR}/mysql-database/
 
 echo "Setting up ingress..."
 minikube addons enable ingress

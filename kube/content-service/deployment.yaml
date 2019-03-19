@@ -10,7 +10,7 @@ spec:
         app: content-service
     spec:
       containers:
-      - name: content-service-external
-        image: franpog859/content-service:v0.2
+      - name: content-service
+        image: franpog859/content-service:v0.3
         ports:
         - containerPort: 8000
