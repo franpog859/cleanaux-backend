@@ -14,14 +14,14 @@ const (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 
-	router := gin.Default()
-	userRouter := router.Group("/user")
+	externalRouter := gin.Default()
+	externalUserRouter := externalRouter.Group("/user")
 	{
-		userRouter.GET("/content", userGetContent)
-		userRouter.PUT("/content", userPutContent)
+		externalUserRouter.GET("/content", userGetContent)
+		externalUserRouter.PUT("/content", userPutContent)
 	}
 
-	router.Run(externalPort)
+	externalRouter.Run(externalPort)
 }
 
 func userGetContent(context *gin.Context) {

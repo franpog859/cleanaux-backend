@@ -10,7 +10,7 @@ import (
 const (
 	databaseUsername     = "root"
 	databasePassword     = "password"
-	databaseBase         = "mysql-database-internal:3306"
+	databaseBase         = "mysql:3306"
 	databaseDatabaseName = "content"
 )
 
