@@ -1,10 +1,11 @@
 package main
 
 import (
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 )
 
 func TestConvert_CreateContentFromItems(t *testing.T) {
@@ -18,119 +19,119 @@ func TestConvert_CreateContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, -9).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -9).Format(dateLayout),
 				20,
 			},
 			{
 				2,
 				"name",
 				1,
-				now.AddDate(0, 0, -10).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -10).Format(dateLayout),
 				20,
 			},
 			{
 				3,
 				"name",
 				1,
-				now.AddDate(0, 0, -14).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -14).Format(dateLayout),
 				20,
 			},
 			{
 				4,
 				"name",
 				1,
-				now.AddDate(0, 0, -15).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -15).Format(dateLayout),
 				20,
 			},
 			{
 				5,
 				"name",
 				1,
-				now.AddDate(0, 0, -18).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -18).Format(dateLayout),
 				20,
 			},
 			{
 				6,
 				"name",
 				1,
-				now.AddDate(0, 0, -19).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -19).Format(dateLayout),
 				20,
 			},
 			{
 				7,
 				"name",
 				1,
-				now.AddDate(0, 0, -3).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -3).Format(dateLayout),
 				7,
 			},
 			{
 				8,
 				"name",
 				1,
-				now.AddDate(0, 0, -4).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -4).Format(dateLayout),
 				7,
 			},
 			{
 				9,
 				"name",
 				1,
-				now.AddDate(0, 0, -5).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -5).Format(dateLayout),
 				7,
 			},
 			{
 				10,
 				"name",
 				1,
-				now.AddDate(0, 0, -6).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -6).Format(dateLayout),
 				7,
 			},
 			{
 				11,
 				"name",
 				1,
-				now.AddDate(0, 0, -7).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -7).Format(dateLayout),
 				7,
 			},
 			{
 				12,
 				"name",
 				1,
-				now.AddDate(0, 0, 0).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, 0).Format(dateLayout),
 				3,
 			},
 			{
 				13,
 				"name",
 				1,
-				now.AddDate(0, 0, -1).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -1).Format(dateLayout),
 				3,
 			},
 			{
 				14,
 				"name",
 				1,
-				now.AddDate(0, 0, -2).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -2).Format(dateLayout),
 				3,
 			},
 			{
 				15,
 				"name",
 				1,
-				now.AddDate(0, 0, -3).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -3).Format(dateLayout),
 				3,
 			},
 			{
 				16,
 				"name",
 				1,
-				now.AddDate(0, 0, 0).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, 0).Format(dateLayout),
 				1,
 			},
 			{
 				17,
 				"name",
 				1,
-				now.AddDate(0, 0, -1).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -1).Format(dateLayout),
 				1,
 			},
 		}
@@ -169,7 +170,7 @@ func TestConvert_CreateContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, -9).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, -9).Format(dateLayout),
 				0,
 			},
 		}
@@ -188,7 +189,7 @@ func TestConvert_CreateContentFromItems(t *testing.T) {
 				1,
 				"name",
 				1,
-				now.AddDate(0, 0, 20).Format(DATE_LAYOUT),
+				now.AddDate(0, 0, 20).Format(dateLayout),
 				20,
 			},
 		}
@@ -212,7 +213,7 @@ func TestConvert_CreateUpdateItemInput(t *testing.T) {
 		}
 		expectedUpdateItem := updateItem{
 			ID:            1,
-			LastUsageDate: now.Format(DATE_LAYOUT),
+			LastUsageDate: now.Format(dateLayout),
 		}
 
 		// when

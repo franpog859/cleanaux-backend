@@ -1,6 +1,6 @@
 package main
 
-const DATE_LAYOUT = "2006-01-02"
+const dateLayout = "2006-01-02"
 
 type item struct {
 	ID            int
