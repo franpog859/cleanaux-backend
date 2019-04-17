@@ -1,11 +1,12 @@
 package main
 
 import (
-	"errors"
 	"fmt"
 	"time"
 )
 
+// CreateContentFromItems converts slice of database items
+// to user content provided in the handler.
 func CreateContentFromItems(items []item) ([]userContentResponse, error) {
 	content := []userContentResponse{}
 	for _, item := range items {
@@ -40,7 +41,7 @@ func getStatus(item item) (int, error) {
 }
 
 func countDays(lastUsageDate string) (int, error) {
-	lastUsage, err := time.Parse(DATE_LAYOUT, lastUsageDate)
+	lastUsage, err := time.Parse(dateLayout, lastUsageDate)
 	if err != nil {
 		return 0, err
 	}
@@ -51,10 +52,10 @@ func countDays(lastUsageDate string) (int, error) {
 
 func calculateStatus(intervalDays, pastDays int) (int, error) {
 	if intervalDays < 1 || pastDays < 0 {
-		return 0, errors.New(fmt.Sprintf(
+		return 0, fmt.Errorf(
 			"error while calculating status from intervalDays: %d and pastDays: %d",
 			intervalDays, pastDays,
-		))
+		)
 	}
 
 	var border int
@@ -88,8 +89,10 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	return 0, nil
 }
 
+// CreateUpdateItemInput creates database input from information
+// provided int PUT request.
 func CreateUpdateItemInput(userContentRequestBody userContentRequest) updateItem {
-	lastUsageDate := time.Now().Format(DATE_LAYOUT)
+	lastUsageDate := time.Now().Format(dateLayout)
 
 	return updateItem{
 		ID:            userContentRequestBody.ID,
