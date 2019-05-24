@@ -18,6 +18,12 @@ sudo bash ../scripts/cleanup-minikube.sh
 
 ## Google Cloud Platform
 
+To login into `gcloud` run:
+
+```bash
+gcloud auth login
+```
+
 To connect to the cluster run the command provided by GCP:
 
 ```bash
@@ -35,7 +41,7 @@ sudo bash ../scripts/install-gcp.sh
 To open MySQL database client run:
 
 ```bash
-kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql-database-internal -ppassword
 ```
 
 To open MongoDB database client run: **TODO**
