@@ -7,13 +7,13 @@ To install Cleanaux Backend run scripts from `/scripts`
 To install Cleanaux Backend on minikube run:
 
 ```bash
-sudo bash ../scripts/install-minikube.sh
+bash ../scripts/install-minikube.sh
 ```
 
 Remember to clean up the minikube (especially the volumes) after work by running:
 
 ```bash
-sudo bash ../scripts/cleanup-minikube.sh
+bash ../scripts/cleanup-minikube.sh
 ```
 
 ## Google Cloud Platform
@@ -33,7 +33,7 @@ gcloud container clusters get-credentials {CLUSTER_NAME} --zone {ZONE} --project
 To install Cleanaux Backend on GCP run:
 
 ```bash
-sudo bash ../scripts/install-gcp.sh
+bash ../scripts/install-gcp.sh
 ```
 
 ## Both of them
