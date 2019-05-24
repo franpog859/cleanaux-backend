@@ -5,7 +5,7 @@ metadata:
   labels:
     type: local
 spec:
-  storageClassName: manual
+  storageClassName: mysql-pv
   capacity:
     storage: 0.5Gi
   accessModes:
@@ -18,6 +18,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: mysql-pv-claim
 spec:
+  storageClassName: mysql-pv
   accessModes:
     - ReadWriteOnce
   resources:
@@ -27,7 +28,7 @@ spec:
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
-  name: init-script
+  name: mysql-init-script
 spec:
   accessModes:
   - ReadWriteOnce

@@ -14,14 +14,14 @@ spec:
         app: mysql
     spec:
       initContainers:
-      - name: init-script-downloader
+      - name: mysql-init-script-downloader
         image: appropriate/curl
         args:
         - "-o"
         - "/tmp/data/db-init.sql"
         - "https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/content-service/init/db-init.sql"
         volumeMounts:
-        - name: init-script
+        - name: mysql-init-script
           mountPath: /tmp/data
       containers:
       - image: mysql:5.6
@@ -36,12 +36,12 @@ spec:
         volumeMounts:
         - name: mysql-persistent-storage
           mountPath: /var/lib/mysql
-        - name: init-script
+        - name: mysql-init-script
           mountPath: /docker-entrypoint-initdb.d
       volumes:
-      - name: init-script
+      - name: mysql-init-script
         persistentVolumeClaim:
-          claimName: init-script
+          claimName: mysql-init-script
       - name: mysql-persistent-storage
         persistentVolumeClaim:
           claimName: mysql-pv-claim

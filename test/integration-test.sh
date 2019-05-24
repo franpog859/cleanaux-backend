@@ -1,4 +1,5 @@
 # TODO: Check if port is available.
+# TODO: Delete this test. It's deprecated.
 
 cd ../auth-service
 docker build -t auth-service .
