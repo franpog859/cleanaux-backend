@@ -25,11 +25,27 @@ spec:
     requests:
       storage: 0.5Gi
 ---
+kind: PersistentVolume
+apiVersion: v1
+metadata:
+  name: mysql-init-pv-volume
+  labels:
+    type: local
+spec:
+  storageClassName: mysql-init-pv
+  capacity:
+    storage: 100Mi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/tmp/data"
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
   name: mysql-init-script
 spec:
+  storageClassName: mysql-init-pv
   accessModes:
   - ReadWriteOnce
   volumeMode: Filesystem
