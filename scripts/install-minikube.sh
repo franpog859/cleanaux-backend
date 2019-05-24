@@ -22,16 +22,14 @@ echo "Applying services..."
 kubectl apply -f ${KUBERNETES_DIR}/entry-service/
 kubectl apply -f ${KUBERNETES_DIR}/auth-service/
 kubectl apply -f ${KUBERNETES_DIR}/content-service/
-kubectl apply -f ${KUBERNETES_DIR}/mysql-database/
-kubectl apply -f ${KUBERNETES_DIR}/mongo-database/
 
 echo "Applying databases..."
-kubectl apply -f ${KUBERNETES_DIR}/mysql-database/persistent-volume-minikube.yaml
 kubectl apply -f ${KUBERNETES_DIR}/mysql-database/deployment.yaml
 kubectl apply -f ${KUBERNETES_DIR}/mysql-database/service.yaml
-kubectl apply -f ${KUBERNETES_DIR}/mongo-database/persistent-volume-minikube.yaml
+kubectl apply -f ${KUBERNETES_DIR}/mysql-database/persistent-volume-minikube.yaml
 kubectl apply -f ${KUBERNETES_DIR}/mongo-database/deployment.yaml
 kubectl apply -f ${KUBERNETES_DIR}/mongo-database/service.yaml
+kubectl apply -f ${KUBERNETES_DIR}/mongo-database/persistent-volume-minikube.yaml
 
 echo "Setting up ingress..."
 minikube addons enable ingress
