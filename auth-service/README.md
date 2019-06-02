@@ -3,9 +3,7 @@
 To build and push the docker image run:
 
 ```sh
-docker build -t auth-service .
-docker tag {IMAGE_ID} franpog859/auth-service:{TAG}
-docker push franpog859/auth-service:{TAG}
+bash build-and-push-image.sh {TAG}
 ```
 
 To build and expose Auth Service with Docker run:

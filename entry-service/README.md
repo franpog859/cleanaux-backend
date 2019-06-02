@@ -3,9 +3,7 @@
 To build and push the docker image run:
 
 ```sh
-docker build -t entry-service .
-docker tag {IMAGE_ID} franpog859/entry-service:{TAG}
-docker push franpog859/entry-service:{TAG}
+bash build-and-push-image.sh {TAG}
 ```
 
 To build and expose Entry Service with Docker run:

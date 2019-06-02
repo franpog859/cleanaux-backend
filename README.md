@@ -17,6 +17,14 @@ Go microservice exposing REST API via Ingress. It uses MySQL database to store d
 - `scripts/` directory contains installation scripts
 - `test/` directory contains some testing tips
 
+## Development
+
+To build Docker images from local repository and push them to the Docker Hub run:
+
+```bash
+bash scripts/build-and-push-images.sh {TAG}
+```
+
 ## To do
 
 - add authorization method in Auth Service, enable logging to the app and create auth middleware for Content Service

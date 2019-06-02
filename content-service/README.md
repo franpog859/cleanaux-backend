@@ -3,9 +3,7 @@
 To build and push the docker image run:
 
 ```sh
-docker build -t content-service .
-docker tag {IMAGE_ID} franpog859/content-service:{TAG}
-docker push franpog859/content-service:{TAG}
+bash build-and-push-image.sh {TAG}
 ```
 
 To build and expose Content Service with Docker run:
