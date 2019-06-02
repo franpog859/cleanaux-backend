@@ -1,34 +1,28 @@
 # Apply Kubernetes resources
 
-To install Cleanaux Backend run scripts from `/scripts` or do:
+To install Cleanaux Backend run scripts from `/scripts`
 
 ## Minikube
 
-To start minikube run:
+To install Cleanaux Backend on minikube run:
 
 ```bash
-minikube start --vm-driver={VM_DRIVER}
+bash ../scripts/install-minikube.sh
 ```
 
-To apply ingress on minikube run:
+**Remember** to clean up the minikube after work by running:
 
 ```bash
-minikube addons enable ingress
-minikube addons disable addon-manager # see if everything works with: minikube addons list
-kubectl apply -f ingress.yaml # wait a while
-kubectl get ingress # remember {ADDRESS} and {HOSTS}
-sudo vim /etc/hosts # add ingress {ADDRESS} {HOSTS} to the /etc/hosts file
-```
-
-Remember to manually delete volumes after work by running:
-
-```bash
-kubectl delete deployment,svc mysql
-kubectl delete pvc mysql-pv-claim
-kubectl delete pv mysql-pv-volume
+bash ../scripts/cleanup-minikube.sh
 ```
 
 ## Google Cloud Platform
+
+To login into `gcloud` run:
+
+```bash
+gcloud auth login
+```
 
 To connect to the cluster run the command provided by GCP:
 
@@ -36,29 +30,22 @@ To connect to the cluster run the command provided by GCP:
 gcloud container clusters get-credentials {CLUSTER_NAME} --zone {ZONE} --project {PROJECT}
 ```
 
-To apply ingress on GCP run:
+To install Cleanaux Backend on GCP run:
 
 ```bash
-kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml 
-kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx --watch
-kubectl apply -f ingress.yaml
+bash ../scripts/install-gcp.sh
 ```
 
 ## Both of them
 
-To apply deployments and services run:
+To open MySQL database client run:
 
 ```bash
-kubectl apply -f entry-service/
-kubectl apply -f auth-service/
-kubectl apply -f content-service/
-kubectl apply -f mysql-database/
+kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql-database-internal -ppassword
 ```
 
-To open MySQL client for content-service run:
+To open MongoDB database client run: 
 
 ```bash
-kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql -ppassword
+#TODO
 ```

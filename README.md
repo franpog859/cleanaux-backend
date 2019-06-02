@@ -19,7 +19,6 @@ Go microservice exposing REST API via Ingress. It uses MySQL database to store d
 
 ## To do
 
-- add CI jobs
 - add authorization method in Auth Service, enable logging to the app and create auth middleware for Content Service
 - delete unused Entry Service
 - create Swagger API description for both services
