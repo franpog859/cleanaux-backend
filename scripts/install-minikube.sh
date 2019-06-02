@@ -9,7 +9,7 @@ echo "Setting up VM driver..."
 if [[ "$OSTYPE" == "darwin"* ]]; then
     VM_DRIVER="hyperkit"
 elif [[ "$OSTYPE" == "linux-gnu" ]]; then
-    VM_DRIVER="kvm2" # TODO: Check if it works correctly.
+    VM_DRIVER="kvm2" 
 else
     echo "Unknown system. Unable to run minikube! Exitting..."
     exit 1
@@ -36,7 +36,7 @@ minikube addons enable ingress
 minikube addons disable addon-manager
 
 echo "Applying ingress..."
-kubectl apply -f ${KUBERNETES_DIR}/ingress.yaml
+kubectl apply -f ${KUBERNETES_DIR}/ingress/ingress.yaml
 
 echo "Wait for ingress and other resources to start."
 echo "For more information go to the /kube/README.md file!"

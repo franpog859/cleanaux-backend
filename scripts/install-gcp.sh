@@ -20,12 +20,11 @@ kubectl apply -f ${KUBERNETES_DIR}/mongo-database/service.yaml
 
 echo "Setting up ingress..."
 kubectl create clusterrolebinding cluster-admin-binding --clusterrole cluster-admin --user $(gcloud config get-value account)
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
-kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/provider/cloud-generic.yaml # for GKE
-kubectl get pods --all-namespaces -l app.kubernetes.io/name=ingress-nginx
+kubectl create namespace ingress-nginx
+kubectl apply --kustomize ${KUBERNETES_DIR}/ingress/
 
 echo "Applying ingress..."
-kubectl apply -f ${KUBERNETES_DIR}/ingress.yaml
+kubectl apply -f ${KUBERNETES_DIR}/ingress/ingress.yaml
 
 echo "Wait for ingress and other resources to start."
 echo "For more information go to the /kube/README.md file!"
