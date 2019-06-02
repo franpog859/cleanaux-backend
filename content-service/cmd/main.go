@@ -64,5 +64,5 @@ func userPutContent(context *gin.Context) {
 		return
 	}
 
-	context.Status(http.StatusOK)
+	context.Status(http.StatusNoContent)
 }
