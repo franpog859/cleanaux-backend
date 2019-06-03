@@ -7,6 +7,7 @@ import (
 	"bufio"
 	"bytes"
 	"encoding/gob"
+	"errors"
 	"fmt"
 	"io"
 	"io/ioutil"
@@ -70,6 +71,14 @@ type testIntfMapT2 struct {
 }
 
 func (x testIntfMapT2) GetIntfMapV() string { return x.IntfMapV }
+
+var testErrWriterErr = errors.New("testErrWriterErr")
+
+type testErrWriter struct{}
+
+func (x *testErrWriter) Write(p []byte) (int, error) {
+	return 0, testErrWriterErr
+}
 
 // ----
 
@@ -375,7 +384,7 @@ func testInit() {
 		bh.MaxInitLen = testMaxInitLen
 	}
 
-	testMsgpackH.RawToString = true
+	testMsgpackH.WriteExt = true
 
 	var tTimeExt timeExt
 	var tBytesExt wrapBytesExt
@@ -817,14 +826,12 @@ func testCodecTableOne(t *testing.T, h Handle) {
 	tableTestNilVerify := testTableVerify(testVerifyDoNil|testVerifyMapTypeStrIntf, h)
 	switch v := h.(type) {
 	case *MsgpackHandle:
-		var oldWriteExt, oldRawToString bool
-		_, _ = oldWriteExt, oldRawToString
-		oldWriteExt, v.WriteExt = v.WriteExt, true
-		oldRawToString, v.RawToString = v.RawToString, true
-		// defer func() { v.WriteExt, v.RawToString = oldWriteExt, oldRawToString }()
+		var oldWriteExt bool
+		_ = oldWriteExt
+		oldWriteExt = v.WriteExt
+		v.WriteExt = true
 		doTestCodecTableOne(t, false, h, table, tableVerify)
 		v.WriteExt = oldWriteExt
-		v.RawToString = oldRawToString
 	case *JsonHandle:
 		//skip []interface{} containing time.Time, as it encodes as a number, but cannot decode back to time.Time.
 		//As there is no real support for extension tags in json, this must be skipped.
@@ -1167,7 +1174,6 @@ func testCodecRpcOne(t *testing.T, rr Rpc, h Handle, doRequest bool, exitSleepMs
 	// var opts *DecoderOptions
 	// opts := testDecOpts
 	// opts.MapType = mapStrIntfTyp
-	// opts.RawToString = false
 	serverExitChan := make(chan bool, 1)
 	var serverExitFlag uint64
 	serverFn := func() {
@@ -1417,6 +1423,22 @@ func doTestAnonCycle(t *testing.T, name string, h Handle) {
 	rtid := rt2id(rt)
 	pti := basicHandle(h).getTypeInfo(rtid, rt)
 	logT(t, "pti: %v", pti)
+}
+
+func doTestErrWriter(t *testing.T, name string, h Handle) {
+	var ew testErrWriter
+	w := bufio.NewWriterSize(&ew, 4)
+	enc := NewEncoder(w, h)
+	for i := 0; i < 4; i++ {
+		err := enc.Encode("ugorji")
+		if ev, ok := err.(encodeError); ok {
+			err = ev.Cause()
+		}
+		if err != testErrWriterErr {
+			logT(t, "%s: expecting err: %v, received: %v", name, testErrWriterErr, err)
+			failT(t)
+		}
+	}
 }
 
 func doTestJsonLargeInteger(t *testing.T, v interface{}, ias uint8) {
@@ -2902,6 +2924,11 @@ func TestAllAnonCycle(t *testing.T) {
 	doTestAnonCycle(t, "cbor", testCborH)
 }
 
+func TestAllErrWriter(t *testing.T) {
+	doTestErrWriter(t, "cbor", testCborH)
+	doTestErrWriter(t, "json", testJsonH)
+}
+
 // ----- RPC -----
 
 func TestBincRpcGo(t *testing.T) {
@@ -3061,9 +3088,8 @@ func TestCborMammothMapsAndSlices(t *testing.T) {
 }
 
 func TestMsgpackMammothMapsAndSlices(t *testing.T) {
-	old1, old2 := testMsgpackH.RawToString, testMsgpackH.WriteExt
-	defer func() { testMsgpackH.RawToString, testMsgpackH.WriteExt = old1, old2 }()
-	testMsgpackH.RawToString = true
+	old1 := testMsgpackH.WriteExt
+	defer func() { testMsgpackH.WriteExt = old1 }()
 	testMsgpackH.WriteExt = true
 
 	doTestMammothMapsAndSlices(t, testMsgpackH)
