@@ -26,12 +26,6 @@
   version = "v1.4.1"
 
 [[projects]]
-  branch = "travis-1.9"
-  name = "github.com/golang/lint"
-  packages = [".","golint"]
-  revision = "883fe33ffc4344bad1ecd881f61afd5ec5d80e0a"
-
-[[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
@@ -86,12 +80,6 @@
   revision = "4c4f7f33c9ed00de01c4c741d2177abfcfe19307"
 
 [[projects]]
-  branch = "master"
-  name = "golang.org/x/tools"
-  packages = ["cmd/goimports","go/ast/astutil","go/gcexportdata","go/internal/gcimporter","go/internal/packagesdriver","go/packages","go/types/typeutil","internal/fastwalk","internal/gopathwalk","internal/imports","internal/module","internal/semver"]
-  revision = "2de7f9bf822ce37065c31659ae7187ea9e416dde"
-
-[[projects]]
   name = "google.golang.org/appengine"
   packages = ["cloudsql"]
   revision = "4c25cacc810c02874000e4f7071286a8e96b2515"
@@ -112,6 +100,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8d8d9bf5007f4abe1d766fb3a847d14c57feff49e6c2bd46b908253dc6ee6c2a"
+  inputs-digest = "c737ea19215aa07034273e185a1e5d43b7dd2ef3a8ebf7b8ee6734c74f584d7f"
   solver-name = "gps-cdcl"
   solver-version = 1

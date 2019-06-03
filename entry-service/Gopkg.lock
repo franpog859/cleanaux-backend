@@ -20,12 +20,6 @@
   version = "v1.4.0"
 
 [[projects]]
-  branch = "travis-1.9"
-  name = "github.com/golang/lint"
-  packages = [".","golint"]
-  revision = "883fe33ffc4344bad1ecd881f61afd5ec5d80e0a"
-
-[[projects]]
   name = "github.com/golang/protobuf"
   packages = ["proto"]
   revision = "b5d812f8a3706043e23a9cd5babf2e5423744d30"
@@ -80,12 +74,6 @@
   revision = "4c4f7f33c9ed00de01c4c741d2177abfcfe19307"
 
 [[projects]]
-  branch = "master"
-  name = "golang.org/x/tools"
-  packages = ["cmd/goimports","go/ast/astutil","go/gcexportdata","go/internal/gcimporter","go/internal/packagesdriver","go/packages","go/types/typeutil","internal/fastwalk","internal/gopathwalk","internal/imports","internal/module","internal/semver"]
-  revision = "2de7f9bf822ce37065c31659ae7187ea9e416dde"
-
-[[projects]]
   name = "gopkg.in/go-playground/validator.v8"
   packages = ["."]
   revision = "5f1438d3fca68893a817e4a66806cea46a9e4ebf"
@@ -100,6 +88,6 @@
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "ebcf06e4f6793a7ad16037b45eb6c580d44dab8792c35ecbf989221011b6d84e"
+  inputs-digest = "d4747153de4ebd1905d2aea7dfd8c323fa07aa3d6a11047d22043b1ecae7dc5a"
   solver-name = "gps-cdcl"
   solver-version = 1
