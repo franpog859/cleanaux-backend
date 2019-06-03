@@ -6,6 +6,7 @@ jobs:
     working_directory: /go/src/github.com/franpog859/cleanaux-backend
     steps:
     - checkout
+    - run: dep version
     - run: bash scripts/check-code.sh
 
 workflows:
