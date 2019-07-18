@@ -6,7 +6,6 @@ CURRENT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 KUBERNETES_DIR="${CURRENT_DIR}/../kube"
 
 echo "Applying services..."
-kubectl apply -f ${KUBERNETES_DIR}/entry-service/
 kubectl apply -f ${KUBERNETES_DIR}/auth-service/
 kubectl apply -f ${KUBERNETES_DIR}/content-service/
 

@@ -7,7 +7,6 @@ cd ${CURRENT_DIR}
 
 echo "Checking auth-service code..."
 ./../auth-service/check-code.sh
-echo "Checking entry-service code..."
-./../entry-service/check-code.sh
+
 echo "Checking content-service code..."
 ./../content-service/check-code.sh

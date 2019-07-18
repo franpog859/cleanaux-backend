@@ -21,8 +21,4 @@ echo "Building and pushing content-service image..."
 cd ${ROOT_DIR}/content-service
 bash build-and-push-image.sh ${TAG}
 
-echo "Building and pushing entry-service image..."
-cd ${ROOT_DIR}/entry-service
-bash build-and-push-image.sh ${TAG}
-
 echo "Successfully built images with TAG: ${TAG}"
