@@ -16,6 +16,7 @@ func main() {
 
 	externalRouter := gin.Default()
 	externalUserRouter := externalRouter.Group("/user")
+	externalUserRouter.Use(AuthMiddleware)
 	{
 		externalUserRouter.GET("/content", userGetContent)
 		externalUserRouter.PUT("/content", userPutContent)
