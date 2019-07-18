@@ -13,3 +13,7 @@ spec:
         backend:
           serviceName: content-service-external
           servicePort: 80
+      - path: /login
+        backend:
+          serviceName: auth-service-external
+          servicePort: 80

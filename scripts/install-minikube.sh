@@ -19,7 +19,6 @@ echo "Starting minikube..."
 minikube start --vm-driver=${VM_DRIVER}
 
 echo "Applying services..."
-kubectl apply -f ${KUBERNETES_DIR}/entry-service/
 kubectl apply -f ${KUBERNETES_DIR}/auth-service/
 kubectl apply -f ${KUBERNETES_DIR}/content-service/
 

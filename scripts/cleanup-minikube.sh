@@ -14,7 +14,6 @@ kubectl delete -f ${KUBERNETES_DIR}/mongo-database/service.yaml
 kubectl delete -f ${KUBERNETES_DIR}/mongo-database/persistent-volume-minikube.yaml
 
 echo "Deleting services..."
-kubectl delete -f ${KUBERNETES_DIR}/entry-service/
 kubectl delete -f ${KUBERNETES_DIR}/auth-service/
 kubectl delete -f ${KUBERNETES_DIR}/content-service/
 

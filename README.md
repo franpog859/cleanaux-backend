@@ -28,7 +28,6 @@ bash scripts/build-and-push-images.sh {TAG}
 ## To do
 
 - add authorization method in Auth Service, enable logging to the app and create auth middleware for Content Service
-- delete unused Entry Service
 - create Swagger API description for both services
 - add monitoring for both services and for databases
 - add acceptance tests scenarios
