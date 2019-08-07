@@ -15,11 +15,16 @@ const (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 
+	// create k8sClient
+	// create dbClient
+
 	internalRouter := gin.Default()
-	internalRouter.POST("/authorize", handlers.Authorize)
+	internalHandler := handlers.NewInternalHandler("k8sClient")
+	internalRouter.POST("/authorize", internalHandler.Authorize)
 
 	externalRouter := gin.Default()
-	externalRouter.POST("/login", handlers.Login)
+	externalHandler := handlers.NewExternalHandler("dbClient", "k8sClient")
+	externalRouter.POST("/login", externalHandler.Login)
 
 	wg := &sync.WaitGroup{}
 	wg.Add(1)

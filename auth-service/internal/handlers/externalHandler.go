@@ -1,13 +1,11 @@
 package handlers
 
 import (
-	"encoding/base64"
-	"fmt"
 	"log"
 	"net/http"
-	"strings"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/auth"
 	"github.com/gin-gonic/gin"
 )
 
@@ -39,10 +37,28 @@ var users = []user{
 	},
 }
 
-func Login(context *gin.Context) {
+// ExternalHandler interface
+type ExternalHandler interface {
+	Login(context *gin.Context)
+}
+
+type externalHandler struct {
+	databaseClient   string
+	kubernetesClient string
+}
+
+// NewExternalHandler provides ExternalHandler interface
+func NewExternalHandler(databaseClient string, kubernetesClient string) ExternalHandler {
+	return &externalHandler{
+		databaseClient,
+		kubernetesClient,
+	}
+}
+
+func (eh *externalHandler) Login(context *gin.Context) {
 	authHeader := context.GetHeader(authHeaderKey)
 
-	username, password, err := extractCredentialsFromHeader(authHeader)
+	username, password, err := auth.ExtractCredentialsFromHeader(authHeader)
 	if err != nil {
 		log.Printf("Error while extracting credentials from header: %v", err)
 		context.AbortWithStatus(http.StatusUnauthorized)
@@ -76,25 +92,6 @@ func Login(context *gin.Context) {
 	context.JSON(http.StatusOK, response)
 }
 
-func extractCredentialsFromHeader(basicAuthHeader string) (string, string, error) {
-	splittedAuthHeader := strings.SplitN(basicAuthHeader, " ", 2)
-
-	if len(splittedAuthHeader) != 2 || splittedAuthHeader[0] != "Basic" {
-		return "", "", fmt.Errorf("invalid Basic Auth header: %s", basicAuthHeader)
-	}
-
-	authPayload, _ := base64.StdEncoding.DecodeString(splittedAuthHeader[1])
-	basicCredentials := strings.SplitN(string(authPayload), ":", 2)
-
-	if len(basicCredentials) != 2 {
-		return "", "", fmt.Errorf("invalid Basic Auth credentials: %s", authPayload)
-	}
-
-	username, password := basicCredentials[0], basicCredentials[1]
-
-	return username, password, nil
-}
-
 func areCredentialsValid(username, password string) (bool, error) {
 	for _, user := range users {
 		if username == user.username && password == user.password {
@@ -116,8 +113,4 @@ func createJWTToken(username string) (string, error) {
 	}
 
 	return signedToken, nil
-}
-
-func Authorize(context *gin.Context) {
-	context.JSON(http.StatusOK, nil)
 }
