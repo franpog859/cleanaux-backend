@@ -1,9 +1,9 @@
 package main
 
 import (
-	"net/http"
 	"sync"
 
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/handlers"
 	"github.com/gin-gonic/gin"
 )
 
@@ -16,10 +16,10 @@ func main() {
 	gin.SetMode(gin.ReleaseMode)
 
 	internalRouter := gin.Default()
-	internalRouter.POST("/authorize", authorize)
+	internalRouter.POST("/authorize", handlers.Authorize)
 
 	externalRouter := gin.Default()
-	externalRouter.POST("/login", login)
+	externalRouter.POST("/login", handlers.Login)
 
 	wg := &sync.WaitGroup{}
 	wg.Add(1)
@@ -33,12 +33,4 @@ func main() {
 	}()
 
 	wg.Wait()
-}
-
-func login(context *gin.Context) {
-	context.JSON(http.StatusOK, "token")
-}
-
-func authorize(context *gin.Context) {
-	context.JSON(http.StatusOK, nil)
 }
