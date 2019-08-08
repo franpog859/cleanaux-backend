@@ -1,13 +1,16 @@
 package auth
 
-import "github.com/dgrijalva/jwt-go"
+import (
+	"github.com/dgrijalva/jwt-go"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
+)
 
 const (
 	jwtTokenSecret = "lasdlkashdakjshd"
 )
 
 // CreateJWTToken function creates a JWT token using username and JTW secret
-func CreateJWTToken(username string) (string, error) {
+func CreateJWTToken(username string, kubernetesClient kubernetes.Client) (string, error) {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"username": username,
 	})

@@ -27,10 +27,10 @@ type externalHandler struct {
 }
 
 // NewExternalHandler provides ExternalHandler interface
-func NewExternalHandler(databaseClient database.Client, kubernetesClient kubernetes.Client) ExternalHandler {
+func NewExternalHandler(dbClient database.Client, k8sClient kubernetes.Client) ExternalHandler {
 	return &externalHandler{
-		databaseClient,
-		kubernetesClient,
+		databaseClient:   dbClient,
+		kubernetesClient: k8sClient,
 	}
 }
 
@@ -39,12 +39,11 @@ func (eh *externalHandler) Login(context *gin.Context) {
 
 	username, password, err := auth.ExtractCredentialsFromHeader(authHeader)
 	if err != nil {
-		log.Printf("Error while extracting credentials from header: %v", err)
+		log.Printf("Invalid Basic Auth header: %v", err)
 		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
-	// TODO: Use database to get users (pass it to the function)
 	valid, err := auth.AreCredentialsValid(username, password, eh.databaseClient)
 	if err != nil {
 		log.Printf("Error while validating credentials: %v", err)
@@ -57,8 +56,7 @@ func (eh *externalHandler) Login(context *gin.Context) {
 		return
 	}
 
-	// TODO: Use k8sClient to get jwtTokenSecret
-	jwtToken, err := auth.CreateJWTToken(username)
+	jwtToken, err := auth.CreateJWTToken(username, eh.kubernetesClient)
 	if err != nil {
 		log.Printf("Error while creating JWT token: %v", err)
 		context.AbortWithStatus(http.StatusInternalServerError)
