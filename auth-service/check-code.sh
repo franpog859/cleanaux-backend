@@ -104,7 +104,7 @@ fi
 # GO VET
 ##
 echo "Checking go vet..."
-packagesToVet=("./cmd/...")
+packagesToVet=("./cmd/..." "./internal/...")
 for vPackage in "${packagesToVet[@]}"; do
 	vetResult=$(go vet ${vPackage})
 	if [ $(echo ${#vetResult}) != 0 ]; then
