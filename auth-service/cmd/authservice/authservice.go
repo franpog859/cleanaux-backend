@@ -3,7 +3,10 @@ package main
 import (
 	"sync"
 
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/database"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/handlers"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
 	"github.com/gin-gonic/gin"
 )
 
@@ -15,15 +18,16 @@ const (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 
-	// create k8sClient
-	// create dbClient
+	kubernetesClient := kubernetes.NewClient()
+	databaseClient := database.NewClient()
+	tokenCache := cache.New()
 
 	internalRouter := gin.Default()
-	internalHandler := handlers.NewInternalHandler("k8sClient")
+	internalHandler := handlers.NewInternalHandler(kubernetesClient, tokenCache)
 	internalRouter.POST("/authorize", internalHandler.Authorize)
 
 	externalRouter := gin.Default()
-	externalHandler := handlers.NewExternalHandler("dbClient", "k8sClient")
+	externalHandler := handlers.NewExternalHandler(databaseClient, kubernetesClient)
 	externalRouter.POST("/login", externalHandler.Login)
 
 	wg := &sync.WaitGroup{}

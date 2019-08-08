@@ -3,6 +3,9 @@ package handlers
 import (
 	"net/http"
 
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
+
 	"github.com/gin-gonic/gin"
 )
 
@@ -12,13 +15,15 @@ type InternalHandler interface {
 }
 
 type internalHandler struct {
-	kubernetesClient string
+	kubernetesClient kubernetes.Client
+	tokenCache       cache.Cache
 }
 
 // NewInternalHandler provides InternalHandler interface
-func NewInternalHandler(kubernetesClient string) InternalHandler {
+func NewInternalHandler(kubernetesClient kubernetes.Client, tokenCache cache.Cache) InternalHandler {
 	return &internalHandler{
 		kubernetesClient,
+		tokenCache,
 	}
 }
 
