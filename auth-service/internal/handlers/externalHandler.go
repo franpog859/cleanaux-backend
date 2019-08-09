@@ -40,7 +40,7 @@ func (eh *externalHandler) Login(context *gin.Context) {
 	username, password, err := auth.ExtractCredentialsFromHeader(authHeader)
 	if err != nil {
 		log.Printf("Invalid authorization header: %v", err)
-		context.AbortWithStatus(http.StatusUnauthorized)
+		context.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
 

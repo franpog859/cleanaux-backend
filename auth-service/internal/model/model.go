@@ -1,5 +1,7 @@
 package model
 
+import "github.com/dgrijalva/jwt-go"
+
 // User is a model of entity from mongo database
 type User struct {
 	ID       int
@@ -10,4 +12,10 @@ type User struct {
 // TokenResponse is a response provided by the /login endpoint
 type TokenResponse struct {
 	Token string `json:"token"`
+}
+
+// Claims struct used as StandardClaims for generating JWT token
+type Claims struct {
+	Username string `json:"username"`
+	jwt.StandardClaims
 }
