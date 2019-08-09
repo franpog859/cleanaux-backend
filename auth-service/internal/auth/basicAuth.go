@@ -17,13 +17,13 @@ const (
 func ExtractCredentialsFromHeader(basicAuthHeader string) (string, string, error) {
 	splittedAuthHeader := strings.SplitN(basicAuthHeader, " ", 2)
 	if len(splittedAuthHeader) != 2 || splittedAuthHeader[0] != basicBearer {
-		return "", "", fmt.Errorf("invalid Basic Auth header: %s", basicAuthHeader)
+		return "", "", fmt.Errorf("invalid Basic Auth header structure: %s", basicAuthHeader)
 	}
 
 	authPayload, _ := base64.StdEncoding.DecodeString(splittedAuthHeader[1])
 	basicCredentials := strings.SplitN(string(authPayload), ":", 2)
 	if len(basicCredentials) != 2 {
-		return "", "", fmt.Errorf("invalid Basic Auth credentials: %s", authPayload)
+		return "", "", fmt.Errorf("invalid Basic Auth credentials structure: %s", authPayload)
 	}
 
 	username, password := basicCredentials[0], basicCredentials[1]
