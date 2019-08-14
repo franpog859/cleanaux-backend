@@ -47,5 +47,5 @@ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h 
 To open MongoDB database client run:
 
 ```bash
-#TODO
+kubectl exec -it {MONGO_POD_NAME} /usr/bin/mongo
 ```

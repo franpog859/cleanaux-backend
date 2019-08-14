@@ -40,9 +40,8 @@ func TestAuth_AreCredentialsValid(t *testing.T) {
 		password := "pass1"
 
 		databaseClient := &mocks.Client{}
-		databaseClient.On("GetAllUsers").Return([]model.User{
+		databaseClient.On("GetAuthorizedUsers", username, password).Return([]model.User{
 			{
-				ID:       1,
 				Username: username,
 				Password: password,
 			},

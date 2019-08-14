@@ -4,7 +4,6 @@ import "github.com/dgrijalva/jwt-go"
 
 // User is a model of entity from mongo database
 type User struct {
-	ID       int
 	Username string
 	Password string
 }
