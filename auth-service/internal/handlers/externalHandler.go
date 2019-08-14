@@ -4,10 +4,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/auth"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/database"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
-
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/auth"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 	"github.com/gin-gonic/gin"
 )

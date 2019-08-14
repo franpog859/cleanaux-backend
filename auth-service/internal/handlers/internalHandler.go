@@ -8,7 +8,6 @@ import (
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
-
 	"github.com/gin-gonic/gin"
 )
 

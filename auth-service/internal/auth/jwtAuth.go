@@ -69,7 +69,8 @@ func IsTokenValid(token string, tokenCache cache.Cache, kubernetesClient kuberne
 
 		valid, err := parseToken(token, jwtTokenSecret)
 		if err != nil {
-			return false, err
+			log.Printf("Invalid JWT token: %v", err)
+			return false, nil
 		}
 		if !valid {
 			return false, nil
@@ -83,7 +84,7 @@ func parseToken(token, secret string) (bool, error) {
 	claims := &model.Claims{}
 
 	parsedToken, err := jwt.ParseWithClaims(token, claims, func(token *jwt.Token) (interface{}, error) {
-		return secret, nil
+		return []byte(secret), nil
 	})
 	if err != nil {
 		if err == jwt.ErrSignatureInvalid {
