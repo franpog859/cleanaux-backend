@@ -1,11 +1,8 @@
 package main
 
 import (
-	"bytes"
 	"log"
 	"net/http"
-	"net/url"
-	"strconv"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -62,15 +59,12 @@ func authorize(header string) (int, error) {
 	return status, err
 }
 
-func post(postURL string, keyValuePairs map[string]string) (int, error) {
-	form := url.Values{}
-	for k, v := range keyValuePairs {
-		form.Add(k, v)
-	}
+func post(postURL string, headers map[string]string) (int, error) {
+	req, _ := http.NewRequest("POST", postURL, nil)
 
-	req, _ := http.NewRequest("POST", postURL, bytes.NewBufferString(form.Encode()))
-	req.Header.Add("Content-Type", "application/x-www-form-urlencoded")
-	req.Header.Add("Content-Length", strconv.Itoa(len(form.Encode())))
+	for key, value := range headers {
+		req.Header.Add(key, value)
+	}
 
 	client := &http.Client{
 		Timeout: time.Second * requestTimeout,

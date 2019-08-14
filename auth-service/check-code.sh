@@ -104,7 +104,7 @@ fi
 # GO VET
 ##
 echo "Checking go vet..."
-packagesToVet=("./cmd/...")
+packagesToVet=("./cmd/..." "./internal/...")
 for vPackage in "${packagesToVet[@]}"; do
 	vetResult=$(go vet ${vPackage})
 	if [ $(echo ${#vetResult}) != 0 ]; then
@@ -118,7 +118,7 @@ done
 # GO BUILD
 ##
 echo "Checking go build..."
-go build -a -installsuffix cgo -o built-service ./cmd
+go build -a -installsuffix cgo -o built-service ./cmd/authservice
 goBuildResult=$?
 if [ ${goBuildResult} != 0 ]; then
 	echo -e "${RED}✗ go build ${NC}\n$goBuildResult${NC}"

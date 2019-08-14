@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: content-service
-        image: franpog859/content-service:v0.5
+        image: franpog859/content-service:v0.5.1
         ports:
         - containerPort: 8000
