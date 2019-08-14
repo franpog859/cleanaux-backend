@@ -25,9 +25,14 @@ To build Docker images from local repository and push them to the Docker Hub run
 bash scripts/build-and-push-images.sh {TAG}
 ```
 
+To mock an interface go to its directory and run:
+
+```bash
+$GOPATH/bin/mockery -name={INTERFACE_NAME}
+```
+
 ## To do
 
-- add authorization method in Auth Service, enable logging to the app and create auth middleware for Content Service
 - create Swagger API description for both services
 - add monitoring for both services and for databases
 - add acceptance tests scenarios

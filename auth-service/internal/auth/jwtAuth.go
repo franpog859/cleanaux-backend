@@ -6,9 +6,8 @@ import (
 	"strings"
 	"time"
 
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
-
 	"github.com/dgrijalva/jwt-go"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 )
