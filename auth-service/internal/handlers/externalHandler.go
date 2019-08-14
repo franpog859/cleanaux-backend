@@ -12,10 +12,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-const (
-	authHeaderKey = "Authorization"
-)
-
 // ExternalHandler interface
 type ExternalHandler interface {
 	Login(context *gin.Context)
@@ -35,7 +31,7 @@ func NewExternalHandler(dbClient database.Client, k8sClient kubernetes.Client) E
 }
 
 func (eh *externalHandler) Login(context *gin.Context) {
-	authHeader := context.GetHeader(authHeaderKey)
+	authHeader := context.GetHeader(model.AuthHeaderKey)
 
 	username, password, err := auth.ExtractCredentialsFromHeader(authHeader)
 	if err != nil {
