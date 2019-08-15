@@ -31,6 +31,21 @@ To mock an interface go to its directory and run:
 $GOPATH/bin/mockery -name={INTERFACE_NAME}
 ```
 
+## Production
+
+Before setting up the content in the databases edit the default `jwtkey` value in `jwt-secret` Secret:
+
+```bash
+kubectl edit secret jwt-secret
+```
+
+To perform **all tokens revocation** edit the `jwt-secret` Secret and delete running `auth-service` Pod:
+
+```bash
+kubectl edit secret jwt-secret
+kubectl delete po {AUTH_SERVICE_POD}
+```
+
 ## To do
 
 - create Swagger API description for both services

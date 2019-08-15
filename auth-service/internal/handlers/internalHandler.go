@@ -5,8 +5,6 @@ import (
 	"net/http"
 
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/auth"
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 	"github.com/gin-gonic/gin"
 )
@@ -17,15 +15,13 @@ type InternalHandler interface {
 }
 
 type internalHandler struct {
-	kubernetesClient kubernetes.Client
-	tokenCache       cache.Cache
+	secretKey string
 }
 
 // NewInternalHandler provides InternalHandler interface
-func NewInternalHandler(kubernetesClient kubernetes.Client, tokenCache cache.Cache) InternalHandler {
+func NewInternalHandler(secretKey string) InternalHandler {
 	return &internalHandler{
-		kubernetesClient,
-		tokenCache,
+		secretKey: secretKey,
 	}
 }
 
@@ -39,10 +35,10 @@ func (ih *internalHandler) Authorize(context *gin.Context) {
 		return
 	}
 
-	valid, err := auth.IsTokenValid(token, ih.tokenCache, ih.kubernetesClient)
+	valid, err := auth.IsTokenValid(token, ih.secretKey)
 	if err != nil {
 		log.Printf("Error while validating token: %v", err)
-		context.AbortWithStatus(http.StatusInternalServerError)
+		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 	if !valid {

@@ -15,3 +15,11 @@ spec:
         ports:
         - containerPort: 8000
         - containerPort: 8001
+        volumeMounts:
+        - name: jwt-secret
+          mountPath: "/data/secret"
+          readOnly: true
+      volumes:
+      - name: jwt-secret
+        secret:
+          secretName: jwt-secret

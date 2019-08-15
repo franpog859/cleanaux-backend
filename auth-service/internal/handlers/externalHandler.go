@@ -6,7 +6,6 @@ import (
 
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/auth"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/database"
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 	"github.com/gin-gonic/gin"
 )
@@ -17,15 +16,15 @@ type ExternalHandler interface {
 }
 
 type externalHandler struct {
-	databaseClient   database.Client
-	kubernetesClient kubernetes.Client
+	databaseClient database.Client
+	secretKey      string
 }
 
 // NewExternalHandler provides ExternalHandler interface
-func NewExternalHandler(dbClient database.Client, k8sClient kubernetes.Client) ExternalHandler {
+func NewExternalHandler(dbClient database.Client, secretKey string) ExternalHandler {
 	return &externalHandler{
-		databaseClient:   dbClient,
-		kubernetesClient: k8sClient,
+		databaseClient: dbClient,
+		secretKey:      secretKey,
 	}
 }
 
@@ -51,7 +50,7 @@ func (eh *externalHandler) Login(context *gin.Context) {
 		return
 	}
 
-	jwtToken, err := auth.CreateJWTToken(username, eh.kubernetesClient)
+	jwtToken, err := auth.CreateJWTToken(username, eh.secretKey)
 	if err != nil {
 		log.Printf("Error while creating JWT token: %v", err)
 		context.AbortWithStatus(http.StatusInternalServerError)

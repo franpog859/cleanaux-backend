@@ -22,7 +22,4 @@ type Claims struct {
 const (
 	// AuthHeaderKey is a header key used for authorization
 	AuthHeaderKey = "Authorization"
-
-	// JwtTokenSecret is a mocked secret. TODO: Delete it after implementing real one!
-	JwtTokenSecret = "lasdlkashdakjshd"
 )
