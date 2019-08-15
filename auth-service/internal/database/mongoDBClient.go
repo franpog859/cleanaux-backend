@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"encoding/base64"
 	"fmt"
 
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
@@ -41,9 +42,11 @@ func NewClient() (Client, error) {
 }
 
 func (c *client) GetAuthorizedUsers(username, password string) ([]model.User, error) {
+	encodedPassword := base64.StdEncoding.EncodeToString([]byte(password))
+
 	filter := bson.M{
 		"username": username,
-		"password": password,
+		"password": encodedPassword,
 	}
 
 	cursor, err := c.collection.Find(context.TODO(), filter, nil)
@@ -69,6 +72,9 @@ func getUsersFromCursor(cursor *mongo.Cursor) ([]model.User, error) {
 		if err != nil {
 			return nil, fmt.Errorf("failed to decode user from cursor: %v", err)
 		}
+
+		decodedPassword, _ := base64.StdEncoding.DecodeString(user.Password)
+		user.Password = string(decodedPassword)
 
 		results = append(results, user)
 	}
