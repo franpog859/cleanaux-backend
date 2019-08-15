@@ -14,7 +14,7 @@ const (
 	jwtBearer            = "Bearer"
 )
 
-// CreateJWTToken function creates a JWT token using username and JTW secret
+// CreateJWTToken function creates a JWT token using username and JWT secret
 func CreateJWTToken(username, JWTKey string) (string, error) {
 	expirationTime := time.Now().Add(tokenExpirationHours * time.Hour)
 
@@ -48,7 +48,8 @@ func ExtractTokenFromHeader(jwtAuthHeader string) (string, error) {
 	return token, nil
 }
 
-// IsTokenValid function validates JWT token checking the signature and expiration time
+// IsTokenValid function validates JWT token checking
+// the signature and expiration time
 func IsTokenValid(token, JWTKey string) (bool, error) {
 	claims := &model.Claims{}
 
