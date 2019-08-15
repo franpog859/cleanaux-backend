@@ -34,8 +34,8 @@ func ExtractCredentialsFromHeader(basicAuthHeader string) (string, string, error
 
 // AreCredentialsValid validates user credentials checking users from the database
 func AreCredentialsValid(username, password string, dbClient database.Client) (bool, error) {
-	if err := validateCredentials(username, password); err != nil {
-		return false, err
+	if valid := validateCredentials(username, password); !valid {
+		return false, nil
 	}
 
 	users, err := dbClient.GetAuthorizedUsers(username, password)
@@ -50,15 +50,15 @@ func AreCredentialsValid(username, password string, dbClient database.Client) (b
 	return true, nil
 }
 
-func validateCredentials(username, password string) error {
+func validateCredentials(username, password string) bool {
 	regexPattern := regexp.MustCompile("^([a-zA-Z0-9]+)$")
 
 	if !regexPattern.MatchString(username) {
-		return fmt.Errorf("invalid username pattern: %s", username)
+		return false
 	}
 	if !regexPattern.MatchString(password) {
-		return fmt.Errorf("invalid password pattern: %s", password)
+		return false
 	}
 
-	return nil
+	return true
 }

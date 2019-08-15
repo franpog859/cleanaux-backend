@@ -18,7 +18,7 @@ const (
 )
 
 // CreateJWTToken function creates a JWT token using username and JTW secret
-func CreateJWTToken(username string, kubernetesClient kubernetes.Client) (string, error) {
+func CreateJWTToken(username string, k8sClient kubernetes.Client) (string, error) {
 	expirationTime := time.Now().Add(tokenExpirationHours * time.Hour)
 
 	claims := &model.Claims{
@@ -31,7 +31,7 @@ func CreateJWTToken(username string, kubernetesClient kubernetes.Client) (string
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
 
 	// TODO: use k8sClient to get jwtTokenSecret every time token is being created
-	jwtTokenSecret := kubernetesClient.GetSecret()
+	jwtTokenSecret := k8sClient.GetSecret()
 
 	signedToken, err := token.SignedString([]byte(jwtTokenSecret))
 	if err != nil {
@@ -55,7 +55,7 @@ func ExtractTokenFromHeader(jwtAuthHeader string) (string, error) {
 }
 
 // IsTokenValid function validates JWT token checking the signature and expiration time
-func IsTokenValid(token string, tokenCache cache.Cache, kubernetesClient kubernetes.Client) (bool, error) {
+func IsTokenValid(token string, tokenCache cache.Cache, k8sClient kubernetes.Client) (bool, error) {
 	// TODO: Refactor this function after implementing interfaces
 	jwtTokenSecret := tokenCache.GetSecret()
 
@@ -63,7 +63,7 @@ func IsTokenValid(token string, tokenCache cache.Cache, kubernetesClient kuberne
 	if !valid {
 		log.Printf("Failed to parse JWT token with cached secret. Retrying with Kubernetes Secret...")
 
-		jwtTokenSecret := kubernetesClient.GetSecret()
+		jwtTokenSecret := k8sClient.GetSecret()
 		tokenCache.SetSecret(jwtTokenSecret)
 
 		valid, err := parseToken(token, jwtTokenSecret)
