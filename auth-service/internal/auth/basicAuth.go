@@ -3,6 +3,7 @@ package auth
 import (
 	"encoding/base64"
 	"fmt"
+	"regexp"
 	"strings"
 
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/database"
@@ -33,16 +34,31 @@ func ExtractCredentialsFromHeader(basicAuthHeader string) (string, string, error
 
 // AreCredentialsValid validates user credentials checking users from the database
 func AreCredentialsValid(username, password string, dbClient database.Client) (bool, error) {
-	users, err := dbClient.GetAllUsers()
+	if valid := validateCredentials(username, password); !valid {
+		return false, nil
+	}
+
+	users, err := dbClient.GetAuthorizedUsers(username, password)
 	if err != nil {
 		return false, fmt.Errorf("failed to get all users from database: %v", err)
 	}
 
-	for _, user := range users {
-		if username == user.Username && password == user.Password {
-			return true, nil
-		}
+	if len(users) < 1 {
+		return false, nil
 	}
 
-	return false, nil
+	return true, nil
+}
+
+func validateCredentials(username, password string) bool {
+	regexPattern := regexp.MustCompile("^([a-zA-Z0-9]+)$")
+
+	if !regexPattern.MatchString(username) {
+		return false
+	}
+	if !regexPattern.MatchString(password) {
+		return false
+	}
+
+	return true
 }

@@ -7,6 +7,7 @@ To run unit tests:
 To test the scenario manually:
 
 - run mysql client and apply test `*.sql` files
+- run mongo interactively and apply test files
 - get ingress host with `kubectl get ingress`
 - get JWT token with `curl -H 'Authorization: Basic dXNlcjE6cGFzczE=' -X POST {HOST}/login -v`
 - get content with `curl -H 'Authorization: Bearer {TOKEN}' {HOST}/user/content -v`
