@@ -46,6 +46,12 @@ kubectl edit secret jwt-secret
 kubectl delete po {AUTH_SERVICE_POD}
 ```
 
+To add a new user run MongoDB client and run script provided in `auth-service/init/db-test` with your values instead of default ones. Remember to put here a base64 encoded password. You can encode it running:
+
+```bash
+echo -n '{PASSWORD}' | base64
+```
+
 ## To do
 
 - create Swagger API description for both services
