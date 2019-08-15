@@ -3,16 +3,16 @@ package auth
 import (
 	"fmt"
 	"testing"
-
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
+	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
 
 func TestAuth_CreateJWTToken(t *testing.T) {
-	t.Run("should return correct token", func(t *testing.T) {
+	t.Run("should return valid token", func(t *testing.T) {
 		// given
 		username := "user1"
 		jwtKey := "7LEFxuMcVuFnz8T0ipX6QbJD6xZd7qsp94JCBnVXsdcOUBaMR0hk5Z4bsCvjYHN"
@@ -28,6 +28,7 @@ func TestAuth_CreateJWTToken(t *testing.T) {
 		})
 		require.NoError(t, err)
 
+		assert.True(t, parsedToken.Valid)
 	})
 }
 
@@ -63,5 +64,62 @@ func TestAuth_ExtractTokenFromHeader(t *testing.T) {
 			// then
 			assert.Error(t, err)
 		}
+	})
+}
+
+func TestAuth_IsTokenValid(t *testing.T) {
+	t.Run("should validate valid token", func(t *testing.T) {
+		// given
+		jwtKey := "7LEFxuMcVuFnz8T0ipX6QbJD6xZd7qsp94JCBnVXsdcOUBaMR0hk5Z4bsCvjYHN"
+		username := "user1"
+
+		token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, &model.Claims{
+			Username: username,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: time.Now().Add(5 * time.Hour).Unix(),
+			},
+		}).SignedString([]byte(jwtKey))
+		require.NoError(t, err)
+
+		// when
+		valid, err := IsTokenValid(token, jwtKey)
+
+		// then
+		require.NoError(t, err)
+		assert.True(t, valid)
+	})
+
+	t.Run("should invalidate not valid token", func(t *testing.T) {
+		// given
+		jwtKey := "7LEFxuMcVuFnz8T0ipX6QbJD6xZd7qsp94JCBnVXsdcOUBaMR0hk5Z4bsCvjYHN"
+		token := "some.wrong.token"
+
+		// when
+		valid, err := IsTokenValid(token, jwtKey)
+
+		// then
+		assert.Error(t, err)
+		assert.False(t, valid)
+	})
+
+	t.Run("should invalidate expired token", func(t *testing.T) {
+		// given
+		jwtKey := "7LEFxuMcVuFnz8T0ipX6QbJD6xZd7qsp94JCBnVXsdcOUBaMR0hk5Z4bsCvjYHN"
+		username := "user1"
+
+		token, err := jwt.NewWithClaims(jwt.SigningMethodHS256, &model.Claims{
+			Username: username,
+			StandardClaims: jwt.StandardClaims{
+				ExpiresAt: time.Now().Add(-5 * time.Hour).Unix(),
+			},
+		}).SignedString([]byte(jwtKey))
+		require.NoError(t, err)
+
+		// when
+		valid, err := IsTokenValid(token, jwtKey)
+
+		// then
+		assert.Error(t, err)
+		assert.False(t, valid)
 	})
 }
