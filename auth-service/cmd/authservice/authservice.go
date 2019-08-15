@@ -5,10 +5,9 @@ import (
 	"log"
 	"sync"
 
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/cache"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/database"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/handlers"
-	"github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes"
+	"github.com/franpog859/cleanaux-backend/auth-service/internal/secret"
 	"github.com/gin-gonic/gin"
 )
 
@@ -20,18 +19,18 @@ const (
 func main() {
 	gin.SetMode(gin.ReleaseMode)
 
-	kubernetesClient, databaseClient, tokenCache, err := initializeClients()
+	databaseClient, secretKey, err := initializeService()
 	if err != nil {
 		log.Printf("Failed to initialize service: %v", err)
 		return
 	}
 
 	internalRouter := gin.Default()
-	internalHandler := handlers.NewInternalHandler(kubernetesClient, tokenCache)
+	internalHandler := handlers.NewInternalHandler(secretKey)
 	internalRouter.POST("/authorize", internalHandler.Authorize)
 
 	externalRouter := gin.Default()
-	externalHandler := handlers.NewExternalHandler(databaseClient, kubernetesClient)
+	externalHandler := handlers.NewExternalHandler(databaseClient, secretKey)
 	externalRouter.POST("/login", externalHandler.Login)
 
 	wg := &sync.WaitGroup{}
@@ -48,15 +47,16 @@ func main() {
 	wg.Wait()
 }
 
-func initializeClients() (kubernetes.Client, database.Client, cache.Cache, error) {
-	kubernetesClient := kubernetes.NewClient()
-
+func initializeService() (database.Client, string, error) {
 	databaseClient, err := database.NewClient()
 	if err != nil {
-		return nil, nil, nil, fmt.Errorf("failed to create database client: %v", err)
+		return nil, "", fmt.Errorf("failed to create database client: %v", err)
 	}
 
-	tokenCache := cache.New()
+	secretKey, err := secret.Get()
+	if err != nil {
+		return nil, "", fmt.Errorf("failed to get secret key: %v", err)
+	}
 
-	return kubernetesClient, databaseClient, tokenCache, nil
+	return databaseClient, secretKey, nil
 }

@@ -11,7 +11,7 @@ import (
 func TestAuth_ExtractTokenFromHeader(t *testing.T) {
 	t.Run("should return correct token", func(t *testing.T) {
 		// given
-		expectedToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTY1ODI2MDA5fQ.UMap1wx_B-xGt5PoEvRsQVgaM0b2qhGpsJexLpymm9M"
+		expectedToken := "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTY1ODI2MDA5fQ.UMap1wx_B-xGt5PoEvRsQVgaM0b2qhGpsJexLpymm9eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InVzZXIxIiwiZXhwIjoxNTY1ODI2MDA5fQ.UMap1wx_B-xGt5PoEvRsQVgaM0b2qhGpsJexLpymm9M"
 
 		header := fmt.Sprintf("%s %s", jwtBearer, expectedToken)
 

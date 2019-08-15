@@ -9,7 +9,6 @@ import (
 	"testing"
 
 	databaseMocks "github.com/franpog859/cleanaux-backend/auth-service/internal/database/mocks"
-	kubernetesMocks "github.com/franpog859/cleanaux-backend/auth-service/internal/kubernetes/mocks"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
 
 	"github.com/gin-gonic/gin"
@@ -33,11 +32,8 @@ func TestHandlers_Login(t *testing.T) {
 
 		secret := "7LEFxuMcVuFnz8T0ipX6QbJD6xZd7qsp94JCBnVXsdcOUBaMR0hk5Z4bsCvjYHN"
 
-		kubernetesClient := &kubernetesMocks.Client{}
-		kubernetesClient.On("GetSecret").Return(secret)
-
 		router := gin.Default()
-		handler := NewExternalHandler(databaseClient, kubernetesClient)
+		handler := NewExternalHandler(databaseClient, secret)
 		router.POST("/login", handler.Login)
 
 		req, _ := http.NewRequest("POST", "/login", nil)
