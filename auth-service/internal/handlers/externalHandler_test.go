@@ -18,7 +18,7 @@ import (
 )
 
 func TestHandlers_Login(t *testing.T) {
-	t.Run("should return correct token", func(t *testing.T) {
+	t.Run("should return token", func(t *testing.T) {
 		// given
 		username := "user1"
 		password := "pass1"
