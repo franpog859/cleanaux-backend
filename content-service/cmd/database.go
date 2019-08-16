@@ -69,11 +69,11 @@ func (database *databaseService) source() string {
 
 func getItemsFromQuery(query *sql.Rows) ([]item, error) {
 	items := []item{}
-	var id, intervalDays, lastUserID int
+	var id, intervalDays int
 	var name, lastUsageDate string
 
 	for query.Next() {
-		err := query.Scan(&id, &name, &lastUserID, &lastUsageDate, &intervalDays)
+		err := query.Scan(&id, &name, &lastUsageDate, &intervalDays)
 		if err != nil {
 			return []item{}, err
 		}
@@ -81,7 +81,6 @@ func getItemsFromQuery(query *sql.Rows) ([]item, error) {
 		itemInstance := item{
 			id,
 			name,
-			lastUserID,
 			lastUsageDate,
 			intervalDays,
 		}

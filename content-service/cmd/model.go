@@ -5,7 +5,6 @@ const dateLayout = "2006-01-02"
 type item struct {
 	ID            int
 	Name          string
-	LastUserID    int
 	LastUsageDate string
 	IntervalDays  int
 }
