@@ -9,7 +9,7 @@ spec:
   rules:
   - http:
       paths:
-      - path: /user
+      - path: /content
         backend:
           serviceName: content-service-external
           servicePort: 80

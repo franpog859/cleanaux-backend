@@ -17,7 +17,7 @@ const (
 	driverName       = "mysql"
 )
 
-// Client interface.
+// Client interface
 type Client interface {
 	GetAllItems() ([]model.Item, error)
 	UpdateItem(updateItem model.UpdateItem) error
@@ -28,7 +28,7 @@ type client struct {
 	dbMySQL *sql.DB
 }
 
-// NewClient provides Client interface.
+// NewClient provides Client interface
 func NewClient() (Client, error) {
 	db, err := sql.Open(driverName, source())
 	if err != nil {

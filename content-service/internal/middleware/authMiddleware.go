@@ -5,18 +5,18 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/franpog859/cleanaux-backend/content-service/internal/model"
 	"github.com/gin-gonic/gin"
 )
 
 const (
 	authURL        = "http://auth-service-internal/authorize"
-	authHeaderKey  = "Authorization"
 	requestTimeout = 10
 )
 
-// Auth calls auth-service to authorize user.
+// Auth calls auth-service to authorize user
 func Auth(context *gin.Context) {
-	authHeader := context.GetHeader(authHeaderKey)
+	authHeader := context.GetHeader(model.AuthHeaderKey)
 	if authHeader == "" {
 		log.Println("No Authorization header provided")
 		context.AbortWithStatus(http.StatusUnauthorized)
@@ -52,7 +52,7 @@ func authorize(header string) (int, error) {
 	status, err := post(
 		authURL,
 		map[string]string{
-			authHeaderKey: header,
+			model.AuthHeaderKey: header,
 		},
 	)
 

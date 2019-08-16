@@ -1,8 +1,10 @@
 package model
 
 const (
-	// DateLayout is a layout used for dates.
+	// DateLayout is a layout used for dates
 	DateLayout = "2006-01-02"
+	// AuthHeaderKey is a header key used for authorization
+	AuthHeaderKey = "Authorization"
 )
 
 // Item is a model of entity from mysql database

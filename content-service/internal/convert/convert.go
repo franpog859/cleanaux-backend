@@ -8,7 +8,7 @@ import (
 )
 
 // ContentFromItems converts slice of database items
-// to user content provided in the handler.
+// to user content provided in the handler
 func ContentFromItems(items []model.Item) ([]model.ContentResponse, error) {
 	content := []model.ContentResponse{}
 	for _, item := range items {
@@ -92,7 +92,7 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 }
 
 // UpdateItemFromContentRequest creates database input item from information
-// provided int PUT request.
+// provided int PUT request
 func UpdateItemFromContentRequest(contentRequestBody model.ContentRequest) model.UpdateItem {
 	lastUsageDate := time.Now().Format(model.DateLayout)
 
