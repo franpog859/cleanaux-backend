@@ -25,5 +25,7 @@ kubectl apply --kustomize ${KUBERNETES_DIR}/ingress/
 echo "Applying ingress..."
 kubectl apply -f ${KUBERNETES_DIR}/ingress/ingress.yaml
 
-echo "Wait for ingress and other resources to start."
+echo "Waiting for ingress and other resources to start..."
+bash ${CURRENT_DIR}/is-ready.sh
+
 echo "For more information go to the /kube/README.md file!"

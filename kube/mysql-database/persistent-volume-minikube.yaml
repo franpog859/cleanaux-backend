@@ -34,7 +34,7 @@ metadata:
 spec:
   storageClassName: mysql-init-pv
   capacity:
-    storage: 100Mi
+    storage: 50Mi
   accessModes:
     - ReadWriteOnce
   hostPath:
