@@ -1,4 +1,4 @@
-package main
+package middleware
 
 import (
 	"log"
@@ -14,8 +14,8 @@ const (
 	requestTimeout = 10
 )
 
-// AuthMiddleware calls auth-service to authorize user.
-func AuthMiddleware(context *gin.Context) {
+// Auth calls auth-service to authorize user.
+func Auth(context *gin.Context) {
 	authHeader := context.GetHeader(authHeaderKey)
 	if authHeader == "" {
 		log.Println("No Authorization header provided")

@@ -1,21 +1,23 @@
-package main
+package convert
 
 import (
 	"fmt"
 	"time"
+
+	"github.com/franpog859/cleanaux-backend/content-service/internal/model"
 )
 
-// CreateContentFromItems converts slice of database items
+// ContentFromItems converts slice of database items
 // to user content provided in the handler.
-func CreateContentFromItems(items []item) ([]userContentResponse, error) {
-	content := []userContentResponse{}
+func ContentFromItems(items []model.Item) ([]model.ContentResponse, error) {
+	content := []model.ContentResponse{}
 	for _, item := range items {
 		status, err := getStatus(item)
 		if err != nil {
 			return content, err
 		}
 
-		c := userContentResponse{
+		c := model.ContentResponse{
 			ID:     item.ID,
 			Name:   item.Name,
 			Status: status,
@@ -26,7 +28,7 @@ func CreateContentFromItems(items []item) ([]userContentResponse, error) {
 	return content, nil
 }
 
-func getStatus(item item) (int, error) {
+func getStatus(item model.Item) (int, error) {
 	pastDays, err := countDays(item.LastUsageDate)
 	if err != nil {
 		return 0, err
@@ -41,7 +43,7 @@ func getStatus(item item) (int, error) {
 }
 
 func countDays(lastUsageDate string) (int, error) {
-	lastUsage, err := time.Parse(dateLayout, lastUsageDate)
+	lastUsage, err := time.Parse(model.DateLayout, lastUsageDate)
 	if err != nil {
 		return 0, err
 	}
@@ -89,13 +91,13 @@ func calculateStatus(intervalDays, pastDays int) (int, error) {
 	return 0, nil
 }
 
-// CreateUpdateItemInput creates database input from information
+// UpdateItemFromContentRequest creates database input item from information
 // provided int PUT request.
-func CreateUpdateItemInput(userContentRequestBody userContentRequest) updateItem {
-	lastUsageDate := time.Now().Format(dateLayout)
+func UpdateItemFromContentRequest(contentRequestBody model.ContentRequest) model.UpdateItem {
+	lastUsageDate := time.Now().Format(model.DateLayout)
 
-	return updateItem{
-		ID:            userContentRequestBody.ID,
+	return model.UpdateItem{
+		ID:            contentRequestBody.ID,
 		LastUsageDate: lastUsageDate,
 	}
 }
