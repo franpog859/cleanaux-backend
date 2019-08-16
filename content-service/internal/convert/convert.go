@@ -45,7 +45,7 @@ func getStatus(item model.Item) (int, error) {
 func countDays(lastUsageDate string) (int, error) {
 	lastUsage, err := time.Parse(model.DateLayout, lastUsageDate)
 	if err != nil {
-		return 0, err
+		return 0, fmt.Errorf("failed to parse date: %v", err)
 	}
 
 	pastDays := int(time.Now().Sub(lastUsage).Hours() / 24)

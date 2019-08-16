@@ -18,14 +18,14 @@ const (
 func Auth(context *gin.Context) {
 	authHeader := context.GetHeader(model.AuthHeaderKey)
 	if authHeader == "" {
-		log.Println("No Authorization header provided")
+		log.Printf("No Authorization header provided")
 		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
 	status, err := authorize(authHeader)
 	if err != nil {
-		log.Println(err)
+		log.Printf("Error while authorizing user: %v", err)
 		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
@@ -34,12 +34,12 @@ func Auth(context *gin.Context) {
 
 		status, err = authorize(authHeader)
 		if err != nil {
-			log.Println(err)
+			log.Printf("Error while authorizing user: %v", err)
 			context.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
 		if status != http.StatusOK {
-			log.Println("Unauthorized")
+			log.Printf("User is not authorized. Status: %d", status)
 			context.AbortWithStatus(status)
 			return
 		}

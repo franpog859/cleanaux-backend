@@ -30,14 +30,14 @@ func NewExternalHandler(dbClient database.Client) ExternalHandler {
 func (eh *externalHandler) GetContent(context *gin.Context) {
 	items, err := eh.databaseClient.GetAllItems()
 	if err != nil {
-		log.Println(err)
+		log.Printf("Error while getting items from database: %v", err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
 
 	content, err := convert.ContentFromItems(items)
 	if err != nil {
-		log.Println(err)
+		log.Printf("Error while converting content from items: %v", err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
@@ -49,7 +49,7 @@ func (eh *externalHandler) PutContent(context *gin.Context) {
 	var requestBody model.ContentRequest
 	err := context.ShouldBindJSON(&requestBody)
 	if err != nil {
-		log.Println(err)
+		log.Printf("Invalid request body: %v", err)
 		context.AbortWithStatus(http.StatusBadRequest)
 		return
 	}
@@ -58,7 +58,7 @@ func (eh *externalHandler) PutContent(context *gin.Context) {
 
 	err = eh.databaseClient.UpdateItem(updateItemInput)
 	if err != nil {
-		log.Println(err)
+		log.Printf("Error while updating item in database: %v", err)
 		context.AbortWithStatus(http.StatusInternalServerError)
 		return
 	}
