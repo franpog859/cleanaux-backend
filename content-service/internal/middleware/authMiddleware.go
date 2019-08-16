@@ -1,31 +1,31 @@
-package main
+package middleware
 
 import (
 	"log"
 	"net/http"
 	"time"
 
+	"github.com/franpog859/cleanaux-backend/content-service/internal/model"
 	"github.com/gin-gonic/gin"
 )
 
 const (
 	authURL        = "http://auth-service-internal/authorize"
-	authHeaderKey  = "Authorization"
 	requestTimeout = 10
 )
 
-// AuthMiddleware calls auth-service to authorize user.
-func AuthMiddleware(context *gin.Context) {
-	authHeader := context.GetHeader(authHeaderKey)
+// Auth calls auth-service to authorize user
+func Auth(context *gin.Context) {
+	authHeader := context.GetHeader(model.AuthHeaderKey)
 	if authHeader == "" {
-		log.Println("No Authorization header provided")
+		log.Printf("No Authorization header provided")
 		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
 
 	status, err := authorize(authHeader)
 	if err != nil {
-		log.Println(err)
+		log.Printf("Error while authorizing user: %v", err)
 		context.AbortWithStatus(http.StatusUnauthorized)
 		return
 	}
@@ -34,12 +34,12 @@ func AuthMiddleware(context *gin.Context) {
 
 		status, err = authorize(authHeader)
 		if err != nil {
-			log.Println(err)
+			log.Printf("Error while authorizing user: %v", err)
 			context.AbortWithStatus(http.StatusUnauthorized)
 			return
 		}
 		if status != http.StatusOK {
-			log.Println("Unauthorized")
+			log.Printf("User is not authorized. Status: %d", status)
 			context.AbortWithStatus(status)
 			return
 		}
@@ -52,7 +52,7 @@ func authorize(header string) (int, error) {
 	status, err := post(
 		authURL,
 		map[string]string{
-			authHeaderKey: header,
+			model.AuthHeaderKey: header,
 		},
 	)
 

@@ -10,7 +10,6 @@ import (
 
 	databaseMocks "github.com/franpog859/cleanaux-backend/auth-service/internal/database/mocks"
 	"github.com/franpog859/cleanaux-backend/auth-service/internal/model"
-
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"

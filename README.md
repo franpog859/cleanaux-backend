@@ -33,18 +33,7 @@ $GOPATH/bin/mockery -name={INTERFACE_NAME}
 
 ## Production
 
-Before setting up the content in the databases edit the default `jwtkey` value in `jwt-secret` Secret:
-
-```bash
-kubectl edit secret jwt-secret
-```
-
-To perform **all tokens revocation** edit the `jwt-secret` Secret and delete running `auth-service` Pod:
-
-```bash
-kubectl edit secret jwt-secret
-kubectl delete po {AUTH_SERVICE_POD}
-```
+Before installing the Cleanaux Backend on your cluster edit the default `jwtkey` value in the `kube/auth-service/secret.yaml` file.
 
 To add a new user run MongoDB client and run script provided in `auth-service/init/db-test` with your values instead of default ones. Remember to put here a base64 encoded password. You can encode it running:
 
@@ -55,6 +44,4 @@ echo -n '{PASSWORD}' | base64
 ## To do
 
 - create Swagger API description for both services
-- add monitoring for both services and for databases
-- add acceptance tests scenarios
 - create end to end test app
