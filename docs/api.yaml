@@ -1,0 +1,129 @@
+swagger: '2.0'
+info:
+  description: >-
+    This is a Cleanaux Backend server. You can find out more about the implementation at [the GitHub page](https://github.com/franpog859/cleanaux-backend).
+  version: 0.5.12
+  title: Cleanaux Backend
+  license:
+    name: Apache 2.0
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+schemes:
+  - http
+paths:
+  /content:
+    get:
+      tags:
+        - content
+      summary: Get all items to clean with their statuses
+      operationId: GetContent
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          description: JWT authorization token
+          required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/ContentResponse'
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+      security:
+        - jwt_auth: []
+    put:
+      tags:
+        - content
+      summary: Update the last cleaning date of an item
+      operationId: PutContent
+      parameters:
+        - in: header
+          name: Authorization
+          type: string
+          description: JWT authorization token 
+          required: true
+        - in: body
+          name: body
+          description: ID of the item that needs to be updated
+          required: true
+          schema:
+            $ref: '#/definitions/ContentRequest'
+      responses:
+        '204':
+          description: successful operation
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+      security:
+        - jwt_auth: []
+            
+  /login:
+    post:
+      tags:
+        - login
+      summary: Login to the server and get JWT token
+      operationId: Login
+      produces:
+        - application/json
+      parameters:
+        - in: header
+          type: string
+          name: Authorization
+          description: Basic authorization credendials
+          required: true
+      responses:
+        '200':
+          description: successful operation
+          schema:
+            $ref: '#/definitions/TokenResponse'
+        '400':
+          description: bad request
+        '401':
+          description: unauthorized
+        '500':
+          description: internal server error
+      security:
+        - basic_auth: []
+
+securityDefinitions:
+  jwt_auth:
+    type: apiKey
+    in: header
+    name: Authorization
+  basic_auth:
+    type: basic
+
+definitions:
+  ContentResponse:
+    type: array
+    items: 
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: integer
+          enum:
+            - 0
+            - 1
+            - 2
+            - 3
+  ContentRequest:
+    type: object
+    properties:
+      id:
+        type: integer
+  TokenResponse:
+    type: object
+    properties:
+      token:
+        type: string
