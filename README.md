@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/franpog859/cleanaux-backend.svg?style=shield)](https://circleci.com/gh/franpog859/cleanaux-backend)
 [![Go Report Card](https://goreportcard.com/badge/github.com/franpog859/cleanaux-backend)](https://goreportcard.com/report/github.com/franpog859/cleanaux-backend)
-[![Docker Pulls](https://img.shields.io/docker/pulls/franpog859/content-service.svg)](https://hub.docker.com/r/franpog859/cleanaux-backend)
+[![Docker Pulls](https://img.shields.io/docker/pulls/franpog859/auth-service.svg)](https://hub.docker.com/r/franpog859/cleanaux-backend)
 
 Cleanaux Backend provides a REST API with a list of things which should be cleaned regularly. If something wasn't cleaned for a long time it appears with a warning color (higher status). After the cleaning the item status is updated.
 
@@ -16,7 +16,7 @@ Content Service uses connected MySQL database to store the data aboud items to c
 
 ## Auth Service
 
-Auth Service uses connected Mongo database to store users credentials. All passwords are encoded. Its job is to authorize user connection and provide JWT token signed with the secret key stored in Kubernetes Secret. Service exposes also internal API for maintaining Content Service calls. Mongo database runs on separate pod.
+Auth Service uses connected Mongo database to store users credentials. All passwords are encoded. Its job is to authorize user connection and provide JWT token signed with the secret key stored in Kubernetes Secret after Basic authentication. Service exposes also internal API for maintaining Content Service calls. Mongo database runs on separate pod.
 
 ## Structure
 
@@ -50,7 +50,7 @@ To add a new user run MongoDB client:
 kubectl exec -it {MONGO_POD_NAME} /usr/bin/mongo
 ```
 
-And run script provided in `auth-service/init/db-test` file with your values instead of default ones. Remember to put here a base64 encoded password. You can encode it running:
+And run script provided in `auth-service/init/db-test` file with your values instead of default ones. Remember that your credentials must consist of only letters and numbers and to put here a base64 encoded password. You can encode it running:
 
 ```bash
 echo -n '{PASSWORD}' | base64
