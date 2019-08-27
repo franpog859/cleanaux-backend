@@ -47,7 +47,7 @@ fi
 #  GO LINT
 ##
 echo "Checking go build golint..."
-go build -o golint-vendored ./vendor/github.com/golang/lint/golint
+go build -o golint-vendored ./vendor/golang.org/x/lint/golint
 buildLintResult=$?
 if [ ${buildLintResult} != 0 ]; then
 	echo -e "${RED}✗ go build lint$ {NC}\n$buildLintResult${NC}"

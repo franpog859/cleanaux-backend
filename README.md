@@ -2,7 +2,7 @@
 
 [![CircleCI](https://circleci.com/gh/franpog859/cleanaux-backend.svg?style=shield)](https://circleci.com/gh/franpog859/cleanaux-backend)
 [![Go Report Card](https://goreportcard.com/badge/github.com/franpog859/cleanaux-backend)](https://goreportcard.com/report/github.com/franpog859/cleanaux-backend)
-[![Docker Pulls](https://img.shields.io/docker/pulls/franpog859/content-service.svg)](https://hub.docker.com/r/franpog859/cleanaux-backend)
+[![Docker Pulls](https://img.shields.io/docker/pulls/franpog859/auth-service.svg)](https://hub.docker.com/r/franpog859/cleanaux-backend)
 
 Cleanaux Backend provides a REST API with a list of things which should be cleaned regularly. If something wasn't cleaned for a long time it appears with a warning color (higher status). After the cleaning the item status is updated.
 
@@ -16,7 +16,7 @@ Content Service uses connected MySQL database to store the data aboud items to c
 
 ## Auth Service
 
-Auth Service uses connected Mongo database to store users credentials. All passwords are encoded. Its job is to authorize user connection and provide JWT token signed with the secret key stored in Kubernetes Secret. Service exposes also internal API for maintaining Content Service calls. Mongo database runs on separate pod.
+Auth Service uses connected Mongo database to store users credentials. All passwords are encoded. Its job is to authorize user connection and provide JWT token signed with the secret key stored in Kubernetes Secret after Basic authentication. Service exposes also internal API for maintaining Content Service calls. Mongo database runs on separate pod.
 
 ## Structure
 
@@ -39,7 +39,7 @@ gcloud auth login
 
 gcloud container clusters get-credentials {CLUSTER_NAME} --zone {ZONE} --project {PROJECT}
 
-bash ../scripts/install-gcp.sh
+bash scripts/install-gcp.sh
 ```
 
 ## Maintenance
@@ -47,10 +47,10 @@ bash ../scripts/install-gcp.sh
 To add a new user run MongoDB client:
 
 ```bash
-kubectl exec -it {MONGO_POD_NAME} /usr/bin/mongo
+kubectl exec -it $(kubectl get po | grep -oE "\b(mongo)([a-zA-Z0-9-])+\b") /usr/bin/mongo
 ```
 
-And run script provided in `auth-service/init/db-test` file with your values instead of default ones. Remember to put here a base64 encoded password. You can encode it running:
+And run script provided in `auth-service/init/db-test` file with your values instead of default ones. Remember that your credentials must consist of only letters and numbers and to put here a base64 encoded password. You can encode it running:
 
 ```bash
 echo -n '{PASSWORD}' | base64
@@ -64,10 +64,16 @@ kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h 
 
 And run script provided in `content-service/init/db-test.sql` file with your values instead of default ones.
 
+To get the host IP run:
+
+```bash
+kubectl get ingress | grep -oE "\b([0-9]{1,3}\.){3}[0-9]{1,3}\b"
+```
+
 ## API
 
 <p align="center">
-<img src="https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/docs/swagger-0-5-12.png">
+<img src="https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/docs/swagger-0-6-0.png">
 </p>
 
 The whole Swagger API you can find in `docs/api.yaml` file. Feel free to dive into the code if something is not clear enough!
