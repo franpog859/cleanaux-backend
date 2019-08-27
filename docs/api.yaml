@@ -2,7 +2,7 @@ swagger: '2.0'
 info:
   description: >-
     This is a Cleanaux Backend server. You can find out more about the implementation at [the GitHub page](https://github.com/franpog859/cleanaux-backend).
-  version: 0.5.12
+  version: 0.6.0
   title: Cleanaux Backend
   license:
     name: Apache 2.0
