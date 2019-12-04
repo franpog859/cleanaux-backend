@@ -13,8 +13,8 @@ Cleanaux Backend provides a REST API with a list of things which should be clean
     <th scope="col"><img src="https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/docs/api-usage.gif"></th>
   </tr>
   <tr>
-    <th scope="col"><p align="center">installation and setup</p></th>
-    <th scope="col"><p align="center">API usage</p></th>
+    <th scope="col">installation and setup</th>
+    <th scope="col">API usage</th>
   </tr>
 </table>
 </p>
