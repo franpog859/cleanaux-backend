@@ -6,6 +6,19 @@
 
 Cleanaux Backend provides a REST API with a list of things which should be cleaned regularly. If something wasn't cleaned for a long time it appears with a warning color (higher status). After the cleaning the item status is updated.
 
+<p align="center">
+<table cellspacing="0" cellpadding="0">
+  <tr>
+    <th scope="col"><img src="https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/docs/install-setup.gif"></th>
+    <th scope="col"><img src="https://raw.githubusercontent.com/franpog859/cleanaux-backend/master/docs/api-usage.gif"></th>
+  </tr>
+  <tr>
+    <th scope="col"><p align="center">installation and setup</p></th>
+    <th scope="col"><p align="center">API usage</p></th>
+  </tr>
+</table>
+</p>
+
 Project consist of two Go microservices - Content Service and Auth Service - exposing REST API via Ingress. Each of them is connected to separate database (this architecture was created more for learning purpose than to minify cloud resources). Every endpoint is secured with some method of authentication. See the [API exposed to the user](#api).
 
 Whole backend is deployed as a cloud native application on Google Cloud Platform with Google Kubernetes Engine. See how to install it in the [production installation section](#production).

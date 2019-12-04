@@ -1,0 +1,479 @@
+# The configurations that used for the recording, feel free to edit them
+config:
+
+  # Specify a command to be executed
+  # like `/bin/bash -l`, `ls`, or any other commands
+  # the default is bash for Linux
+  # or powershell.exe for Windows
+  command: bash -l
+  
+  # Specify the current working directory path
+  # the default is the current working directory path
+  cwd: /home/frun/go/src/github.com/franpog859/cleanaux-backend
+  
+  # Export additional ENV variables
+  env:
+    recording: true
+  
+  # Explicitly set the number of columns
+  # or use `auto` to take the current
+  # number of columns of your shell
+  cols: 80
+  
+  # Explicitly set the number of rows
+  # or use `auto` to take the current
+  # number of rows of your shell
+  rows: 24
+  
+  # Amount of times to repeat GIF
+  # If value is -1, play once
+  # If value is 0, loop indefinitely
+  # If value is a positive number, loop n times
+  repeat: 0
+  
+  # Quality
+  # 1 - 100
+  quality: 100
+  
+  # Delay between frames in ms
+  # If the value is `auto` use the actual recording delays
+  frameDelay: auto
+  
+  # Maximum delay between frames in ms
+  # Ignored if the `frameDelay` isn't set to `auto`
+  # Set to `auto` to prevent limiting the max idle time
+  maxIdleTime: 32000
+  
+  # The surrounding frame box
+  # The `type` can be null, window, floating, or solid`
+  # To hide the title use the value null
+  # Don't forget to add a backgroundColor style with a null as type
+  frameBox:
+    type: floating
+    title: null
+    style: []
+      # border: 0px black solid
+      # boxShadow: none
+      # margin: 0px
+  
+  # Add a watermark image to the rendered gif
+  # You need to specify an absolute path for
+  # the image on your machine or a URL, and you can also
+  # add your own CSS styles
+  watermark:
+    imagePath: null
+    style:
+      position: absolute
+      right: 15px
+      bottom: 15px
+      width: 100px
+      opacity: 0.9
+  
+  # Cursor style can be one of
+  # `block`, `underline`, or `bar`
+  cursorStyle: block
+  
+  # Font family
+  # You can use any font that is installed on your machine
+  # in CSS-like syntax
+  fontFamily: "Monaco, Lucida Console, Ubuntu Mono, Monospace"
+  
+  # The size of the font
+  fontSize: 12
+  
+  # The height of lines
+  lineHeight: 1
+  
+  # The spacing between letters
+  letterSpacing: 0
+  
+  # Theme
+  theme:
+    background: "transparent"
+    foreground: "#afafaf"
+    cursor: "#c7c7c7"
+    black: "#232628"
+    red: "#fc4384"
+    green: "#b3e33b"
+    yellow: "#ffa727"
+    blue: "#75dff2"
+    magenta: "#ae89fe"
+    cyan: "#708387"
+    white: "#d5d5d0"
+    brightBlack: "#626566"
+    brightRed: "#ff7fac"
+    brightGreen: "#c8ed71"
+    brightYellow: "#ebdf86"
+    brightBlue: "#75dff2"
+    brightMagenta: "#ae89fe"
+    brightCyan: "#b1c6ca"
+    brightWhite: "#f9f9f4"
+  
+# Records, feel free to edit them
+records:
+  - delay: 5
+    content: "\e[32mcleanaux-backend\e[00m $ "
+  - delay: 1000
+    content: "gcloud container clusters get-credentials cleanaux-backend-cluster --zone us-central1-a --project cleanaux-backend-233418"
+  - delay: 2000
+    content: "\r\n"
+  - delay: 200
+    content: "Fetching cluster endpoint and auth data.\r\n"
+  - delay: 200
+    content: "kubeconfig entry generated for cleanaux-backend-cluster.\r\n"
+  - delay: 29
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 2000
+    content: .
+  - delay: 50
+    content: /
+  - delay: 100
+    content: s
+  - delay: 100
+    content: c
+  - delay: 100
+    content: r
+  - delay: 100
+    content: i
+  - delay: 30
+    content: pts/
+  - delay: 100
+    content: "i"
+  - delay: 40
+    content: 'n'
+  - delay: 40
+    content: "\astall-"
+  - delay: 100
+    content: g
+  - delay: 100
+    content: 'cp.sh '
+  - delay: 1000
+    content: "\r\n"
+  - delay: 7
+    content: "Preparing shell...\r\nApplying databases...\r\n"
+  - delay: 1000
+    content: "persistentvolumeclaim/mysql-pv-claim created\r\n"
+  - delay: 1000
+    content: "persistentvolumeclaim/mysql-init-script created\r\n"
+  - delay: 1000
+    content: "deployment.extensions/mysql created\r\n"
+  - delay: 1000
+    content: "service/mysql-database-internal created\r\n"
+  - delay: 1000
+    content: "persistentvolumeclaim/mongo-pv-claim created\r\n"
+  - delay: 1000
+    content: "deployment.extensions/mongo created\r\n"
+  - delay: 1000
+    content: "service/mongo-database-internal created\r\n"
+  - delay: 6
+    content: "Applying services...\r\n"
+  - delay: 1000
+    content: "deployment.extensions/auth-service created\r\n"
+  - delay: 500
+    content: "secret/jwt-secret created\r\n"
+  - delay: 500
+    content: "service/auth-service-external created\r\n"
+  - delay: 500
+    content: "service/auth-service-internal created\r\n"
+  - delay: 1000
+    content: "deployment.extensions/content-service created\r\n"
+  - delay: 500
+    content: "service/content-service-external created\r\n"
+  - delay: 5
+    content: "Setting up ingress...\r\n"
+  - delay: 1000
+    content: "clusterrolebinding.rbac.authorization.k8s.io/cluster-admin-binding created\r\n"
+  - delay: 1000
+    content: "namespace/ingress-nginx created\r\n"
+  - delay: 1000
+    content: "serviceaccount/nginx-ingress-serviceaccount created\r\n"
+  - delay: 500
+    content: "role.rbac.authorization.k8s.io/nginx-ingress-role created\r\n"
+  - delay: 500
+    content: "clusterrole.rbac.authorization.k8s.io/nginx-ingress-clusterrole created\r\n"
+  - delay: 500
+    content: "rolebinding.rbac.authorization.k8s.io/nginx-ingress-role-nisa-binding created\r\n"
+  - delay: 500
+    content: "clusterrolebinding.rbac.authorization.k8s.io/nginx-ingress-clusterrole-nisa-binding created\r\n"
+  - delay: 500
+    content: "configmap/nginx-configuration created\r\n"
+  - delay: 500
+    content: "configmap/tcp-services created\r\n"
+  - delay: 500
+    content: "configmap/udp-services created\r\n"
+  - delay: 500
+    content: "service/ingress-nginx created\r\n"
+  - delay: 500
+    content: "deployment.apps/nginx-ingress-controller created\r\n"
+  - delay: 6
+    content: "Applying ingress...\r\n"
+  - delay: 1000
+    content: "ingress.extensions/ingress created\r\n"
+  - delay: 6
+    content: "Waiting for ingress and other resources to start...\r\nChecking if resources are ready...\r\n"
+  - delay: 1000
+    content: "Waiting for resources...\r\n"
+  - delay: 4000
+    content: "Waiting for resources...\r\n"
+  - delay: 4000
+    content: "Cleanaux Backend is ready!\r\nFor more information go to the /kube/README.md file!\r\n"
+  - delay: 5
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 2000
+    content: k
+  - delay: 40
+    content: u
+  - delay: 100
+    content: b
+  - delay: 100
+    content: e
+  - delay: 100
+    content: c
+  - delay: 100
+    content: t
+  - delay: 100
+    content: l
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: g
+  - delay: 50
+    content: e
+  - delay: 100
+    content: "t"
+  - delay: 100
+    content: ' '
+  - delay: 50
+    content: p
+  - delay: 20
+    content: o
+  - delay: 1000
+    content: "\r\n"
+  - delay: 500
+    content: "NAME                               READY   STATUS    RESTARTS   AGE\r\nauth-service-7cc9c585b4-x82x6      1/1     Running   0          10s\r\ncontent-service-79c98bb859-9tcvr   1/1     Running   0           9s\r\nmongo-75f74d7749-26699             1/1     Running   0          10s\r\nmysql-5865585bfd-kznrf             1/1     Running   0          10s\r\n"
+  - delay: 5
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 2000
+    content: e
+  - delay: 100
+    content: c
+  - delay: 100
+    content: h
+  - delay: 40
+    content: o
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: ''''
+  - delay: 100
+    content: p
+  - delay: 100
+    content: "a"
+  - delay: 100
+    content: s
+  - delay: 100
+    content: s
+  - delay: 100
+    content: '1'
+  - delay: 100
+    content: ''''
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: '|'
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: b
+  - delay: 100
+    content: a
+  - delay: 100
+    content: s
+  - delay: 100
+    content: e
+  - delay: 200
+    content: '6'
+  - delay: 100
+    content: '4'
+  - delay: 1000
+    content: "\r\n"
+  - delay: 7
+    content: "cGFzczE=\r\n"
+  - delay: 12
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 2000
+    content: k
+  - delay: 40
+    content: u
+  - delay: 100
+    content: b
+  - delay: 100
+    content: e
+  - delay: 100
+    content: c
+  - delay: 100
+    content: t
+  - delay: 100
+    content: l
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: e
+  - delay: 100
+    content: x
+  - delay: 100
+    content: "e"
+  - delay: 100
+    content: c
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: '-'
+  - delay: 100
+    content: i
+  - delay: 100
+    content: t
+  - delay: 100
+    content: ' '
+  - delay: 400
+    content: mongo-75f74d7749-26699
+  - delay: 400
+    content: ' '
+  - delay: 100
+    content: /
+  - delay: 100
+    content: u
+  - delay: 100
+    content: s
+  - delay: 100
+    content: r
+  - delay: 100
+    content: /
+  - delay: 100
+    content: b
+  - delay: 50
+    content: i
+  - delay: 50
+    content: 'n'
+  - delay: 100
+    content: /
+  - delay: 100
+    content: m
+  - delay: 50
+    content: o
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: g
+  - delay: 50
+    content: o
+  - delay: 4000
+    content: "\r\n"
+  - delay: 1000
+    content: "MongoDB shell version v4.0.4\r\n"
+  - delay: 9
+    content: "connecting to: mongodb://127.0.0.1:27017\r\n"
+  - delay: 5
+    content: "Implicit session: session { \"id\" : UUID(\"d3d17d72-b9c1-4fd3-b1b4-017fb5067c98\") }\r\nMongoDB server version: 4.0.4\r\nWelcome to the MongoDB shell.\r\nFor interactive help, type \"help\".\r\nFor more comprehensive documentation, see\r\n\thttp://docs.mongodb.org/\r\nQuestions? Try the support group\r\n\thttp://groups.google.com/group/mongodb-user\r\n---\r\n\r\n"
+  - delay: 5
+    content: '> '
+  - delay: 2000
+    content: u
+  - delay: 100
+    content: s
+  - delay: 100
+    content: e
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: u
+  - delay: 100
+    content: s
+  - delay: 100
+    content: e
+  - delay: 100
+    content: r
+  - delay: 100
+    content: s
+  - delay: 100
+    content: ;
+  - delay: 100
+    content: "\e[3G\e[Juse users;\e[13G\r\nswitched to db users\r\n> "
+  - delay: 2000
+    content: 'db.basicauth.insertOne({username: "user1", password: "cGFzczE="});'
+  - delay: 4000
+    content: "\e[3G\e[Jdb.basicauth.insertOne({username: \"user1\", password: \"cGFzczE=\"});\e[69G\r\n{\r\n\t\"acknowledged\" : true,\r\n\t\"insertedId\" : ObjectId(\"5de6a66776aaa6d004450901\")\r\n}\r\n> "
+  - delay: 1000
+    content: e
+  - delay: 100
+    content: x
+  - delay: 100
+    content: i
+  - delay: 100
+    content: t
+  - delay: 100
+    content: ;
+  - delay: 1000
+    content: "\e[3G\e[Jexit;\e[8G\r\n"
+  - delay: 5
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 2000
+    content: "kubectl run -it --rm --image=mysql:5.6 --restart=Never mysql-client -- mysql -h mysql-database-internal -ppassword"
+  - delay: 4000
+    content: "\r\n"
+  - delay: 2000
+    content: "If you don't see a command prompt, try pressing enter.\r\n"
+  - delay: 500
+    content: "\r\nmysql> "
+  - delay: 2000
+    content: U
+  - delay: 100
+    content: S
+  - delay: 40
+    content: E
+  - delay: 100
+    content: ' '
+  - delay: 100
+    content: c
+  - delay: 100
+    content: o
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: t
+  - delay: 50
+    content: e
+  - delay: 100
+    content: 'n'
+  - delay: 100
+    content: t
+  - delay: 100
+    content: ;
+  - delay: 1000
+    content: "\r\nReading table information for completion of table and column names\r\nYou can turn off this feature to get a quicker startup with -A\r\n\r\nDatabase changed\r\nmysql> "
+  - delay: 2000
+    content: "INSERT INTO items(name, lastUsageDate, intervalDays) VALUES\r\n    -> (\"kitchen\", \"2019-11-23\", 4),\r\n    -> (\"bathroom\", \"2019-11-30\", 4);"
+  - delay: 4000
+    content: "\r\nQuery OK, 2 rows affected (0.01 sec)\r\nRecords: 2  Duplicates: 0  Warnings: 0\r\n\r\nmysql> "
+  - delay: 2000
+    content: E
+  - delay: 100
+    content: X
+  - delay: 100
+    content: I
+  - delay: 100
+    content: T
+  - delay: 1000
+    content: "\r\nBye\r\n"
+  - delay: 1000
+    content: "pod \"mysql-client\" deleted\r\n"
+  - delay: 1000
+    content: "\r\n\e[32mcleanaux-backend\e[00m $ "
+  - delay: 4000
+    content: ' '
